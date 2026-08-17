@@ -9,7 +9,7 @@ import eu.kanade.tachiyomi.source.model.SMangaUpdate
 import keiyoushi.annotation.Source
 import keiyoushi.source.KeiSource
 
-// Khung rong, chua co logic that; cac phuong thuc duoc dien o cac task sau.
+// Khung rỗng, chưa có logic thật; các phương thức được điền ở các task sau.
 @Source
 abstract class Fapmanga : KeiSource() {
 

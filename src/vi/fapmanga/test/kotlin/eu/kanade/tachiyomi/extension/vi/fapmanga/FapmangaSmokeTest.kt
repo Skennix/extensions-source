@@ -7,8 +7,8 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-// Test do that: chung minh testCompileClasspath cua module nay co du lib keiyoushi
-// (extensions-lib) va duong nap fixture qua classpath resource, khong con la test JVM trivial.
+// Test đo thật: chứng minh testCompileClasspath của module này có đủ lib keiyoushi
+// (extensions-lib) và đường nạp fixture qua classpath resource, không còn là test JVM trivial.
 class FapmangaSmokeTest {
 
     @Test
@@ -19,10 +19,10 @@ class FapmangaSmokeTest {
 
     @Test
     fun `Fapmanga la mot KeiSource`() {
-        // Chu y: annotation @Source co Retention SOURCE (xem core/keiyoushi/annotation/Source.kt),
-        // nen no KHONG con ton tai o runtime de kiem tra bang reflection (Fapmanga::class.annotations
-        // luon rong du bien dich thanh cong). Kiem tra quan he ke thua thuc su voi KeiSource thay vi
-        // kiem tra annotation, vi day la thu duy nhat con lai o runtime de xac nhan duoc.
+        // Chú ý: annotation @Source có Retention SOURCE (xem core/keiyoushi/annotation/Source.kt),
+        // nên nó KHÔNG còn tồn tại ở runtime để kiểm tra bằng reflection (Fapmanga::class.annotations
+        // luôn rỗng dù biên dịch thành công). Kiểm tra quan hệ kế thừa thực sự với KeiSource thay vì
+        // kiểm tra annotation, vì đây là thứ duy nhất còn lại ở runtime để xác nhận được.
         assertTrue(KeiSource::class.java.isAssignableFrom(Fapmanga::class.java))
     }
 
