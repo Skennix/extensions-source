@@ -29,7 +29,15 @@ abstract class Fapmanga : KeiSource() {
         chapters: List<SChapter>,
         fetchDetails: Boolean,
         fetchChapters: Boolean,
-    ): SMangaUpdate = throw UnsupportedOperationException()
+    ): SMangaUpdate {
+        // GET trang bộ đúng MỘT lần, dùng chung cho cả details lẫn chapters theo 2 cờ — trang bộ
+        // của FapManga chứa cả hai loại thông tin trên cùng một URL, không có endpoint riêng.
+        val url = baseUrl + manga.url
+        val body = client.get(url).body.string()
+        val updatedManga = if (fetchDetails) parseMangaDetails(body, baseUrl, url) else manga
+        val updatedChapters = if (fetchChapters) parseChapterList(body, baseUrl, "fetchMangaUpdate", url) else chapters
+        return SMangaUpdate(updatedManga, updatedChapters)
+    }
 
     override suspend fun getPageList(chapter: SChapter): List<Page> = throw UnsupportedOperationException()
 }

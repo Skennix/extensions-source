@@ -23,6 +23,10 @@ class FapmangaParsersTest {
     // (hàm "Stub!" ngoài app Mihon), để giữ hàm parseMangaList test được độc lập.
     private fun parse(html: String, functionName: String, url: String, baseUrl: String = BASE_URL) = parseMangaList(html, baseUrl, functionName, url) { TestManga() }
 
+    private fun parseDetails(html: String, url: String, baseUrl: String = BASE_URL) = parseMangaDetails(html, baseUrl, url) { TestManga() }
+
+    private fun parseChapters(html: String, functionName: String, url: String, baseUrl: String = BASE_URL) = parseChapterList(html, baseUrl, functionName, url) { TestChapter() }
+
     // 4.1: danh-sach.html parse được, danh sách không rỗng.
     @Test
     fun `parseMangaList tra ve danh sach khong rong voi fixture danh-sach`() {
@@ -173,6 +177,112 @@ class FapmangaParsersTest {
         assertTrue(
             "baseUrl khác domain thật trong fixture nên không khớp được mục nào, phải ném lỗi rỗng",
             loi.message?.contains("empty result") == true,
+        )
+    }
+
+    // 5.1: fixture bo-truyen.html có 20 chương (đếm tay 2026-08-17: chap-2..chap-20 trừ chap-1
+    // không tồn tại = 19 chương số + 1 chương đặt tên riêng "tessia-eralith-..." = 20), phải
+    // tìm thấy url kết thúc bằng "/readers-paradise/chap-2".
+    @Test
+    fun `parseChapterList tra ve danh sach chuong khong rong voi fixture bo-truyen`() {
+        val html = loadFixture("bo-truyen.html")
+        val chapters = parseChapters(html, "parseChapterList", "https://fapmanga.com/truyen-hentai/readers-paradise")
+
+        assertTrue("Bộ truyện phải có ít nhất một chương", chapters.isNotEmpty())
+        assertTrue(
+            "Phải chứa chương kết thúc bằng /readers-paradise/chap-2",
+            chapters.any { it.url.endsWith("/readers-paradise/chap-2") },
+        )
+    }
+
+    // 5.2: mọi url chương phải là url tương đối 2 tầng "/truyen-hentai/readers-paradise/<chuong>",
+    // không được lẫn url 1 tầng (trang bộ, hay các bộ liên quan trong card-grid).
+    @Test
+    fun `parseChapterList chi lay url 2 tang khong lan url 1 tang`() {
+        val html = loadFixture("bo-truyen.html")
+        val chapters = parseChapters(html, "parseChapterList", "https://fapmanga.com/truyen-hentai/readers-paradise")
+
+        val oneTierUrlRegex = Regex("""^/truyen-hentai/[^/?#]+/?$""")
+        chapters.forEach { chapter ->
+            assertTrue(
+                "chapter.url phải là đường dẫn tương đối 2 tầng bắt đầu bằng /truyen-hentai/readers-paradise/: ${chapter.url}",
+                chapter.url.startsWith("/truyen-hentai/readers-paradise/"),
+            )
+            assertFalse(
+                "Không được lẫn url 1 tầng (trang bộ): ${chapter.url}",
+                oneTierUrlRegex.matches(chapter.url),
+            )
+        }
+    }
+
+    // 5.3: không được có chương trùng url.
+    @Test
+    fun `parseChapterList khong tra ve url trung lap`() {
+        val html = loadFixture("bo-truyen.html")
+        val chapters = parseChapters(html, "parseChapterList", "https://fapmanga.com/truyen-hentai/readers-paradise")
+
+        assertEquals(
+            "Danh sách chương không được có url trùng lặp",
+            chapters.size,
+            chapters.distinctBy { it.url }.size,
+        )
+    }
+
+    // 5.4: mới nhất trước — phần tử [0] phải là chương số LỚN NHẤT có trong fixture. Đếm tay
+    // 2026-08-17: chap-2 đến chap-20 (chương lớn nhất là chap-20), cộng thêm 1 chương đặt tên
+    // riêng không theo mẫu số. Thứ tự DOM trong fixture KHÔNG đơn điệu (chap-3 đứng trước chap-2)
+    // nên phải sắp lại theo số chương, không được giữ nguyên thứ tự DOM hay đảo ngược nó.
+    @Test
+    fun `parseChapterList sap chuong so lon nhat len dau`() {
+        val html = loadFixture("bo-truyen.html")
+        val chapters = parseChapters(html, "parseChapterList", "https://fapmanga.com/truyen-hentai/readers-paradise")
+
+        assertTrue(
+            "Chương đầu tiên phải kết thúc bằng /chap-20 (chương số lớn nhất trong fixture)",
+            chapters[0].url.endsWith("/chap-20"),
+        )
+    }
+
+    // 5.5: trang không có khối chương nào (fixture tự chế bo-truyen-rong.html — giữ tiêu đề
+    // "<h2>Chương</h2>" nhưng bỏ hẳn div.chapter-list) phải ném lỗi chứa cả functionName lẫn url.
+    @Test
+    fun `parseChapterList nem loi khi fixture bo-truyen-rong khong co khoi chuong`() {
+        val html = loadFixture("bo-truyen-rong.html")
+        val functionName = "parseChapterList-test-caller"
+        val url = "https://fapmanga.com/truyen-hentai/readers-paradise"
+
+        val loi = assertThrows(Exception::class.java) {
+            parseChapters(html, functionName, url)
+        }
+
+        assertTrue(
+            "Thông báo lỗi phải chứa tên hàm gọi vào ($functionName)",
+            loi.message?.contains(functionName) == true,
+        )
+        assertTrue(
+            "Thông báo lỗi phải chứa url truyền vào ($url)",
+            loi.message?.contains(url) == true,
+        )
+    }
+
+    // 5.6: tên bộ có dấu tiếng Việt qua HTML entity (Reader&#039;s Paradise -> Reader's Paradise)
+    // phải giải mã đúng. Riêng thể loại: fixture bo-truyen.html KHÔNG có link "/the-loai/" nào
+    // nằm TRONG <article> (chỉ có ở header/footer dùng chung mọi trang) nên genre thật của bộ
+    // này là null — dùng luôn description (đoạn duy nhất có dấu tiếng Việt thật trên trang) để
+    // kiểm tra giải mã đúng, thay vì bịa ra một genre không tồn tại.
+    @Test
+    fun `parseMangaDetails giai ma dung ten bo va mo ta tieng Viet co dau, khong bia the loai`() {
+        val html = loadFixture("bo-truyen.html")
+        val manga = parseDetails(html, "https://fapmanga.com/truyen-hentai/readers-paradise")
+
+        assertEquals("Reader's Paradise", manga.title)
+        assertTrue(
+            "Mô tả phải chứa đoạn tiếng Việt có dấu thật từ fixture",
+            manga.description?.contains("Ở đây bạn sẽ đc chơi các nhân nữ xinh đẹp") == true,
+        )
+        assertTrue(
+            "Fixture không có thể loại riêng cho bộ này trong <article>, genre phải là null (không bịa/không lẫn tag chân trang)",
+            manga.genre.isNullOrBlank(),
         )
     }
 }
