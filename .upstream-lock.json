@@ -1,0 +1,13 @@
+{
+  ".github": "69e525dda0b0060d31142004f48152ee7c1c1a53",
+  "AGENTS.md": "e0f0196fa9e90f94085dc5d71d5e38942c1bcbfe",
+  "CONTRIBUTING.md": "e983168495a0965144881ddd2b850895dc4905a9",
+  "build.gradle.kts": "924c28cf8174879ab12d4273027d58472a838ed7",
+  "common": "18e85ac53415aff5d94f619acc6bbc6c8597f813",
+  "compiler": "cfc641bec8eed67dbf8512a7e9beb6abb148fe82",
+  "core": "0a21af923380b6fd855a88d5594d46a1d9ec9bc7",
+  "gradle": "77a3cd594e1a2ceb655bd5fbcb510eb4632db9a6",
+  "gradle.properties": "5dcaa209916a0645f43ff02cf32ddcc75846737a",
+  "lib": "38c5340d0436e611bd79937a7365a11eeebbba6d",
+  "settings.gradle.kts": "d1cafce30560ebef0873ec18b325213cd66d8853"
+}

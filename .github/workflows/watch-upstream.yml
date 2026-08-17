@@ -1,0 +1,21 @@
+name: Watch upstream drift
+
+on:
+  schedule:
+    - cron: "0 21 * * *"
+  workflow_dispatch:
+
+jobs:
+  check-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+
+      - name: Add upstream remote and fetch main
+        run: |
+          git remote add upstream https://github.com/keiyoushi/extensions-source.git
+          git fetch upstream main
+
+      - name: Check upstream tree-hash drift
+        run: bash scripts/watch-upstream.sh check
