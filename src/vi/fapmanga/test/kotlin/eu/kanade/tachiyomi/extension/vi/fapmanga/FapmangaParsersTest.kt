@@ -356,6 +356,27 @@ class FapmangaParsersTest {
         )
     }
 
+    // NẶNG-4: nhánh dự phòng (khi mất hẳn class chapter-list, site đổi giao diện) phải tự đứng
+    // vững nhờ NEO SLUG trong regex, không được dựa dẫm vào scope div.chapter-list. Fixture chế
+    // bo-truyen-khong-class-widget.html bỏ hết class chapter-list/chapter-list-item và chèn 2 link
+    // CHƯƠNG của bộ khác (one-piece-series-truyen-ngan) NGAY TRONG CÙNG cụm anh em với 20 link
+    // chương thật — nếu regex không neo slug, heuristic cụm-lớn-nhất sẽ vơ nhầm cả 2 link đó.
+    @Test
+    fun `parseChapterList neo dung slug khi mat het class va roi ve nhanh du phong cum lon nhat`() {
+        val html = loadFixture("bo-truyen-khong-class-widget.html")
+        val chapters = parseChapters(html, "parseChapterList", "https://fapmanga.com/truyen-hentai/readers-paradise")
+
+        assertEquals(
+            "Kết quả phải vẫn đúng 20 chương của readers-paradise, không lẫn 2 link chương bộ khác",
+            20,
+            chapters.size,
+        )
+        assertTrue(
+            "Không được lẫn link chương nào của bộ khác (one-piece-series-truyen-ngan)",
+            chapters.none { it.url.contains("one-piece-series-truyen-ngan") },
+        )
+    }
+
     // VỪA-5: fixture chế bo-truyen-co-genre.html thêm 2 link "/the-loai/" thật của bộ này (Hentai,
     // Manhwa) vào khối info trong <article> — genre phải bóc tách được, nối bằng ", ".
     @Test
