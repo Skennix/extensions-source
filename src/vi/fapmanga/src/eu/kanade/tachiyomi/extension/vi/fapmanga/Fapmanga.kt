@@ -7,15 +7,20 @@ import eu.kanade.tachiyomi.source.model.SChapter
 import eu.kanade.tachiyomi.source.model.SManga
 import eu.kanade.tachiyomi.source.model.SMangaUpdate
 import keiyoushi.annotation.Source
+import keiyoushi.network.get
 import keiyoushi.source.KeiSource
 
-// Khung rỗng, chưa có logic thật; các phương thức được điền ở các task sau.
+// Khung rỗng, chưa có logic thật; các phương thức còn lại được điền ở các task sau.
 @Source
 abstract class Fapmanga : KeiSource() {
 
     override suspend fun getPopularManga(page: Int): MangasPage = throw UnsupportedOperationException()
 
-    override suspend fun getLatestUpdates(page: Int): MangasPage = throw UnsupportedOperationException()
+    override suspend fun getLatestUpdates(page: Int): MangasPage {
+        val url = "$baseUrl/danh-sach?page=$page"
+        val body = client.get(url).body.string()
+        return parseMangaList(body, "getLatestUpdates", url)
+    }
 
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage = throw UnsupportedOperationException()
 
