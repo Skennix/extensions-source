@@ -9,24 +9,22 @@ import eu.kanade.tachiyomi.source.model.SMangaUpdate
 import keiyoushi.annotation.Source
 import keiyoushi.source.KeiSource
 
-// Task 3 — khung rong, chua co logic that. TODO se duoc dien o cac task sau.
+// Khung rong, chua co logic that; cac phuong thuc duoc dien o cac task sau.
 @Source
 abstract class Fapmanga : KeiSource() {
 
-    override val supportsLatest = true
+    override suspend fun getPopularManga(page: Int): MangasPage = throw UnsupportedOperationException()
 
-    override suspend fun getPopularManga(page: Int): MangasPage = TODO("not yet implemented")
+    override suspend fun getLatestUpdates(page: Int): MangasPage = throw UnsupportedOperationException()
 
-    override suspend fun getLatestUpdates(page: Int): MangasPage = TODO("not yet implemented")
-
-    override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage = TODO("not yet implemented")
+    override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage = throw UnsupportedOperationException()
 
     override suspend fun fetchMangaUpdate(
         manga: SManga,
         chapters: List<SChapter>,
         fetchDetails: Boolean,
         fetchChapters: Boolean,
-    ): SMangaUpdate = TODO("not yet implemented")
+    ): SMangaUpdate = throw UnsupportedOperationException()
 
-    override suspend fun getPageList(chapter: SChapter): List<Page> = TODO("not yet implemented")
+    override suspend fun getPageList(chapter: SChapter): List<Page> = throw UnsupportedOperationException()
 }
