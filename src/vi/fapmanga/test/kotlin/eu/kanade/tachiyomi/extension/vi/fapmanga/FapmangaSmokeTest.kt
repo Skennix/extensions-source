@@ -2,6 +2,7 @@ package eu.kanade.tachiyomi.extension.vi.fapmanga
 
 import eu.kanade.tachiyomi.source.model.MangasPage
 import keiyoushi.source.KeiSource
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
@@ -32,5 +33,16 @@ class FapmangaSmokeTest {
         assertNotNull("resources.setSrcDirs(test/fixtures) phai nap duoc README.md", stream)
         val content = stream!!.bufferedReader().readText()
         assertTrue(content.isNotBlank())
+    }
+
+    // T8: 23 thể loại trích tay từ danh-sach.html (đếm tay 2026-08-17: grep unique "/the-loai/<slug>"
+    // trong fixture) + 1 mục "-- Tất cả --" mặc định = 24 lựa chọn. state=0 mặc định phải trỏ vào
+    // mục "Tất cả" (slug rỗng), không được vô tình chọn sẵn 1 genre.
+    @Test
+    fun `GenreFilter co 24 lua chon va mac dinh la Tat ca voi slug rong`() {
+        val filter = GenreFilter()
+
+        assertEquals("23 thể loại + 1 mục Tất cả = 24 lựa chọn", 24, filter.values.size)
+        assertEquals("Mặc định (state=0) phải là slug rỗng (không lọc)", "", filter.toUriPart())
     }
 }

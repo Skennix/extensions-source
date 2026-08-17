@@ -21,7 +21,8 @@ class FapmangaParsersTest {
 
     // Mọi lời gọi test đều tiêm TestManga (lớp giả JVM), không dùng SManga.create() thật
     // (hàm "Stub!" ngoài app Mihon), để giữ hàm parseMangaList test được độc lập.
-    private fun parse(html: String, functionName: String, url: String, baseUrl: String = BASE_URL) = parseMangaList(html, baseUrl, functionName, url) { TestManga() }
+    // allowEmpty mặc định false (giữ đúng luật cứng); 8.3 truyền true riêng cho ca search rỗng.
+    private fun parse(html: String, functionName: String, url: String, baseUrl: String = BASE_URL, allowEmpty: Boolean = false) = parseMangaList(html, baseUrl, functionName, url, allowEmpty) { TestManga() }
 
     private fun parseDetails(html: String, url: String, functionName: String = "parseMangaDetails-test-caller") = parseMangaDetails(html, functionName, url) { TestManga() }
 
@@ -145,6 +146,86 @@ class FapmangaParsersTest {
             "Giao giữa 2 trang xếp hạng liền kề phải rất nhỏ (≤ 2), thực tế: ${giao.size} ($giao)",
             giao.size <= 2,
         )
+    }
+
+    // 7.1: rank p1 parse được, không rỗng. Đếm tay 2026-08-17: khối .card-grid chính có 30 mục.
+    @Test
+    fun `getPopularManga parseMangaList tra ve 30 muc voi fixture rank-week-p1`() {
+        val page = parse(loadFixture("rank-week-p1.html"), "getPopularManga", "https://fapmanga.com?rank=week&page=1")
+
+        assertTrue("Trang rank p1 phải có ít nhất một mục", page.mangas.isNotEmpty())
+        assertEquals("Đếm tay 2026-08-17: khối .card-grid chính của rank-week-p1 có đúng 30 mục", 30, page.mangas.size)
+    }
+
+    // 7.3: markup rank-week-p1 có <link rel="next"> (trang giữa, đo #5) nên hasNextPage phải true.
+    @Test
+    fun `getPopularManga parseMangaList nhan dung hasNextPage true o trang giua rank-week-p1`() {
+        val page = parse(loadFixture("rank-week-p1.html"), "getPopularManga", "https://fapmanga.com?rank=week&page=1")
+
+        assertTrue("Fixture rank-week-p1 có rel=next (đo #5) nên hasNextPage phải true", page.hasNextPage)
+    }
+
+    // 8.1: search-one.html có 48 kết quả (đo #3, RESEARCH.md).
+    @Test
+    fun `getSearchMangaList parseMangaList tra ve 48 ket qua voi fixture search-one`() {
+        val page = parse(loadFixture("search-one.html"), "getSearchMangaList", "https://fapmanga.com/?s=one")
+
+        assertTrue("Kết quả tìm kiếm phải không rỗng", page.mangas.isNotEmpty())
+        assertEquals("Đo #3 (RESEARCH.md 2026-08-17): search-one.html có đúng 48 kết quả", 48, page.mangas.size)
+    }
+
+    // 8.2: đường "?s=" phải ép cứng hasNextPage=false — kiểm ở tầng buildSearchRequest (hàm thuần
+    // Fapmanga.kt gọi lại), vì .copy(hasNextPage=false) nằm ở getSearchMangaList (suspend, cần
+    // mạng thật), không nằm trong parseMangaList. Ca này khoá đúng CỜ quyết định việc ép đó.
+    @Test
+    fun `buildSearchRequest ep forceNoNextPage true cho duong s`() {
+        val request = buildSearchRequest(BASE_URL, page = 1, query = "one", genreSlug = "")
+
+        assertTrue(
+            "Đường \"?s=\" phải ép forceNoNextPage=true (đo #3: site không phân trang kết quả tìm kiếm)",
+            request.forceNoNextPage,
+        )
+    }
+
+    // 8.3: fixture search-rong.html (chế từ search-one.html, bỏ hẳn khối .card-grid kết quả) —
+    // NGOẠI LỆ CÓ CHỦ ĐÍCH (chốt T4-plan mục 8.3): search rỗng là kết quả HỢP LỆ, phải trả rỗng,
+    // KHÔNG ném lỗi (khác luật chung rỗng-thì-ném của mọi lời gọi parseMangaList khác).
+    @Test
+    fun `getSearchMangaList parseMangaList tra ve rong khong nem loi voi fixture search-rong`() {
+        val html = loadFixture("search-rong.html")
+        val page = parse(html, "getSearchMangaList", "https://fapmanga.com/?s=tu-khoa-la", allowEmpty = true)
+
+        assertTrue("Search rỗng phải trả về danh sách rỗng, không văng lỗi", page.mangas.isEmpty())
+        assertFalse("Search rỗng thì hasNextPage cũng phải false", page.hasNextPage)
+    }
+
+    // 8.4: query + filter cùng lúc ⇒ chỉ dùng "?s=", filter thể loại phải bị bỏ hoàn toàn khỏi URL.
+    @Test
+    fun `buildSearchRequest uu tien s bo qua filter khi co ca query lan the loai`() {
+        val request = buildSearchRequest(BASE_URL, page = 1, query = "one", genreSlug = "hentai-18")
+
+        assertEquals(
+            "Có cả query lẫn filter thì URL chỉ được chứa \"?s=\", không được lẫn /the-loai/",
+            "$BASE_URL/?s=one",
+            request.url,
+        )
+        assertFalse(
+            "URL kết quả không được chứa \"/the-loai/\" khi có query",
+            request.url.orEmpty().contains("/the-loai/"),
+        )
+    }
+
+    // 8.5: không query, có chọn thể loại ⇒ URL đúng dạng "/the-loai/<slug>?page=N".
+    @Test
+    fun `buildSearchRequest dung URL the-loai khi khong co query`() {
+        val request = buildSearchRequest(BASE_URL, page = 3, query = "", genreSlug = "hentai-18")
+
+        assertEquals(
+            "Không có query, có chọn thể loại thì URL phải đúng dạng /the-loai/<slug>?page=N",
+            "$BASE_URL/the-loai/hentai-18?page=3",
+            request.url,
+        )
+        assertFalse("Đường thể loại không bị ép forceNoNextPage (site vẫn phân trang thể loại)", request.forceNoNextPage)
     }
 
     // 4 (VỪA): trang cuối THẬT (đo 2026-08-17, rank=week&page=75) không phát rel="next" nữa

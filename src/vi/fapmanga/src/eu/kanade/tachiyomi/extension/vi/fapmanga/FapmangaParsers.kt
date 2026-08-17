@@ -8,6 +8,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.net.URI
 import java.net.URISyntaxException
+import java.net.URLEncoder
 
 // Host CDN ảnh trang chương của FapManga, đo thật 2026-08-17 trên fixture chuong.html (61 ảnh
 // "cdn.fapmanga.com/manga/.../readers-paradise-chap-2-<n>.webp"). Neo bằng SO KHỚP HOST TUYỆT ĐỐI
@@ -28,14 +29,21 @@ internal const val CDN_HOST = "cdn.fapmanga.com"
  * [baseUrl] dùng để dựng regex nhận diện url trang bộ truyện (1 tầng, dạng
  * "$baseUrl/truyen-hentai/<slug>(/)"), tránh khớp trang chương (2 tầng) hay trang thể loại.
  * [functionName] và [url] chỉ dùng để làm rõ thông báo lỗi khi kết quả rỗng.
+ * [allowEmpty] CHỈ dùng cho đường tìm kiếm có từ khoá (getSearchMangaList): kết quả rỗng khi user
+ * gõ từ khoá lạ là HỢP LỆ (ngoại lệ có chủ đích, chốt T4-plan mục 8.3), không phải lỗi parser —
+ * true thì trả `MangasPage(emptyList(), false)` thay vì ném lỗi. Mọi lời gọi khác (danh sách, xếp
+ * hạng, thể loại) giữ nguyên luật cứng "rỗng sau lọc thì ném lỗi", nên để mặc định false.
  * [mangaFactory] cho phép test JVM tiêm cài đặt SManga giả, thay vì SManga.create() thật
  * (hàm "Stub!" khi biên dịch/chạy ngoài app Mihon thật, chỉ được app cấp implementation lúc runtime).
+ * Đặt SAU [allowEmpty] (không phải ngay sau [url]) để giữ vị trí THAM SỐ CUỐI CÙNG — mọi lời gọi
+ * test hiện có dùng cú pháp trailing lambda cho tham số này, đổi vị trí sẽ làm gãy toàn bộ.
  */
 fun parseMangaList(
     html: String,
     baseUrl: String,
     functionName: String,
     url: String,
+    allowEmpty: Boolean = false,
     mangaFactory: () -> SManga = { SManga.create() },
 ): MangasPage {
     val document = Jsoup.parse(html, url)
@@ -66,12 +74,51 @@ fun parseMangaList(
         .filter { it.title.isNotBlank() }
 
     if (mangas.isEmpty()) {
+        if (allowEmpty) {
+            return MangasPage(emptyList(), false)
+        }
         throw Exception("$functionName: empty result from $url")
     }
 
     val hasNextPage = document.selectFirst("link[rel=next], a[rel=next]") != null
 
     return MangasPage(mangas, hasNextPage)
+}
+
+/**
+ * Kết quả quyết định của [buildSearchRequest]: URL cần gọi (null nghĩa là "không có tiêu chí lọc
+ * nào, rơi về getLatestUpdates"), [allowEmpty] truyền thẳng cho tham số cùng tên của
+ * [parseMangaList], và [forceNoNextPage] báo hiệu phải ép `hasNextPage = false` sau khi parse
+ * (đường "?s=" — đo #3, site không phân trang kết quả tìm kiếm).
+ */
+internal data class SearchRequest(
+    val url: String?,
+    val allowEmpty: Boolean,
+    val forceNoNextPage: Boolean,
+)
+
+/**
+ * Hàm thuần quyết định URL và cách xử lý kết quả cho getSearchMangaList (GĐ5) — tách riêng khỏi
+ * hàm suspend thật để test JVM kiểm được LUẬT ƯU TIÊN mà không cần gọi mạng:
+ *
+ * 1. [query] có chữ (sau trim) ⇒ luôn dùng "$baseUrl/?s=<urlencode(query)>", BỎ QUA [genreSlug]
+ *    dù có chọn (đo #3: site không có markup nào cho biết hỗ trợ kết hợp s+the-loai — chốt T8-plan,
+ *    xem RESEARCH.md nếu sau này đo lại ra kết quả khác).
+ * 2. [query] rỗng, [genreSlug] có chữ ⇒ "$baseUrl/the-loai/<genreSlug>?page=<page>".
+ * 3. Cả hai đều rỗng ⇒ trả [SearchRequest.url] = null, tầng gọi tự rơi về getLatestUpdates(page).
+ */
+internal fun buildSearchRequest(baseUrl: String, page: Int, query: String, genreSlug: String): SearchRequest = when {
+    query.isNotBlank() -> SearchRequest(
+        url = "$baseUrl/?s=${URLEncoder.encode(query, "UTF-8")}",
+        allowEmpty = true,
+        forceNoNextPage = true,
+    )
+    genreSlug.isNotBlank() -> SearchRequest(
+        url = "$baseUrl/the-loai/$genreSlug?page=$page",
+        allowEmpty = false,
+        forceNoNextPage = false,
+    )
+    else -> SearchRequest(url = null, allowEmpty = false, forceNoNextPage = false)
 }
 
 /**
