@@ -19,7 +19,7 @@ abstract class Fapmanga : KeiSource() {
     override suspend fun getLatestUpdates(page: Int): MangasPage {
         val url = "$baseUrl/danh-sach?page=$page"
         val body = client.get(url).body.string()
-        return parseMangaList(body, "getLatestUpdates", url)
+        return parseMangaList(body, baseUrl, "getLatestUpdates", url)
     }
 
     override suspend fun getSearchMangaList(page: Int, query: String, filters: FilterList): MangasPage = throw UnsupportedOperationException()
