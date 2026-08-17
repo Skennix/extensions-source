@@ -5,17 +5,25 @@ on:
     - cron: "0 21 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   check-drift:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout fork
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Add upstream remote and fetch main
         run: |
           git remote add upstream https://github.com/keiyoushi/extensions-source.git
-          git fetch upstream main
+          git fetch --depth 1 --no-tags upstream main
+
+      - name: Run watcher selftest
+        run: bash scripts/watch-upstream.sh selftest
 
       - name: Check upstream tree-hash drift
         run: bash scripts/watch-upstream.sh check
