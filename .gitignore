@@ -12,3 +12,8 @@ gen
 generated-src/
 .kotlin
 *.jks
+
+# Log cua canary-fapmanga.ps1 (scripts/canary-fapmanga.ps1) - ghi ngay canh script tren may user,
+# khong commit vi la du lieu chay, khong phai ma nguon.
+scripts/canary-ok.log
+scripts/canary-fail.log
