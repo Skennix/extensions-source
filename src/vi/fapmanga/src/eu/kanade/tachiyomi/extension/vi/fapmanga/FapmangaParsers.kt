@@ -68,27 +68,38 @@ fun parseMangaList(
  * Trang bộ truyện (fixture bo-truyen.html, đo 2026-08-17) KHÔNG gắn class/id riêng cho khối
  * thông tin (chỉ có <h1>/<p> trần), nên các selector dưới đây neo theo CẤU TRÚC (thẻ + vị trí
  * cha-con), không theo tên class suy đoán.
+ *
+ * Không nhận tham số baseUrl: mọi giá trị tuyệt đối hoá (thumbnail...) dùng document base uri
+ * dựng từ [url] (Jsoup.parse(html, url)), không cần domain truyền riêng — khác parseChapterList,
+ * hàm đó thật sự cần baseUrl để dựng regex neo domain cho link chương.
  */
 fun parseMangaDetails(
     html: String,
-    baseUrl: String,
+    functionName: String,
     url: String,
     mangaFactory: () -> SManga = { SManga.create() },
 ): SManga {
     val document = Jsoup.parse(html, url)
     val article = document.selectFirst("article")
-    // Khối thông tin (ảnh bìa + tên + mô tả) là div anh em với ảnh bìa, không có class riêng:
-    // xác định bằng "div cha của <h1>" (h1 là mốc chắc chắn duy nhất của khối này).
-    val infoBlock = document.selectFirst("h1")?.parent()
+
+    val title = document.selectFirst("h1")?.text()?.ifBlank { null } ?: ""
+    if (title.isBlank()) {
+        throw Exception("$functionName: empty title from $url")
+    }
 
     return mangaFactory().apply {
-        title = document.selectFirst("h1")?.text()?.ifBlank { null } ?: ""
-        thumbnail_url = article?.selectFirst("img")?.absUrl("src")?.ifBlank { null }
-        // Đoạn <p> đầu trong khối thông tin là lượt xem (VD "1.252 Lượt xem"), không phải mô tả;
-        // mô tả thật (nếu có) là <p> còn lại không chứa "Lượt xem".
-        description = infoBlock?.select("p")
-            ?.firstOrNull { !it.text().contains("Lượt xem") }
-            ?.text()?.ifBlank { null }
+        this.title = title
+        // Đo 2026-08-17: 1/48 thẻ trong search-one.html không có ảnh bìa (site render
+        // .manga-card-placeholder). Nếu bộ truyện đang bóc tách rơi vào ca đó, <article> vẫn còn
+        // ảnh của 8 bộ "Truyện liên quan" phía dưới — selectFirst("img") trong <article> sẽ ăn
+        // nhầm bìa của bộ khác. og:image (thẻ <meta> riêng cho ĐÚNG bộ này, do site tự render)
+        // không có vấn đề đó: không có bìa thì og:image trỏ ảnh mặc định của site hoặc rỗng,
+        // không bao giờ trỏ sang bộ liên quan.
+        thumbnail_url = document.selectFirst("meta[property=og:image]")?.absUrl("content")?.ifBlank { null }
+        // Mô tả: dùng <meta name="description"> (do site tự render riêng cho từng bộ, đo khớp
+        // 100% nội dung <p> mô tả trong <article>) thay vì heuristic "loại <p> chứa nhãn Lượt
+        // xem" — heuristic đó gãy ngay khi site đổi nhãn hoặc thứ tự <p>.
+        description = document.selectFirst("meta[name=description]")?.attr("content")?.ifBlank { null }
         // Thể loại: chỉ lấy link "/the-loai/" nằm TRONG <article> (nội dung bài viết), không lấy
         // link header/footer (những link "/the-loai/" ở header nav và footer "Khám phá thêm" xuất
         // hiện GIỐNG HỆT nhau trên mọi trang của site, không phải thể loại riêng của bộ truyện
@@ -107,11 +118,17 @@ fun parseMangaDetails(
 /**
  * Hàm thuần bóc tách danh sách chương từ trang bộ truyện của FapManga.
  *
- * Trang bộ truyện (fixture bo-truyen.html) KHÔNG có class/id cho khối chương (chỉ có tiêu đề
- * "<h2>Chương</h2>" trần, không gắn với khối theo cấu trúc DOM nào tin cậy được) — điểm gãy im
- * lặng thật của site. Selector neo theo MẪU URL 2 tầng ("$baseUrl/truyen-hentai/<bo>/<chuong>")
- * + cụm anh-em đồng dạng (tái dùng [findLargestSiblingGroupContainer] từ parseMangaList), CẤM
- * nth-child vì thứ tự DOM của chương không đáng tin (xem lý do sắp xếp lại bên dưới).
+ * Trang bộ truyện (fixture bo-truyen.html) CÓ khối chương "div.chapter-list" (đo 2026-08-17,
+ * comment cũ ở đây ghi "không có class" là SAI — sửa lại) nên selector chính neo thẳng vào đó;
+ * nếu site mất class này (điểm gãy im lặng), rơi về phương án cũ: cụm anh-em đồng dạng (tái dùng
+ * [findLargestSiblingGroupContainer] từ parseMangaList).
+ *
+ * Regex link chương NEO CẢ slug bộ truyện (trích từ [url]), không chỉ mẫu 2 tầng chung chung:
+ * link chương của MỘT BỘ KHÁC (VD lọt vào qua widget "Truyện liên quan" ở cuối trang, hoặc
+ * widget gợi ý tương lai) sẽ không khớp regex, dù nó vẫn là url 2 tầng hợp lệ của site.
+ *
+ * CẤM nth-child vì thứ tự DOM của chương không đáng tin theo số chương (xem lý do sắp xếp lại
+ * bên dưới) — nhưng thứ tự DOM (đảo ngược) vẫn là thứ tự thời gian đăng thật của site.
  */
 fun parseChapterList(
     html: String,
@@ -121,25 +138,36 @@ fun parseChapterList(
     chapterFactory: () -> SChapter = { SChapter.create() },
 ): List<SChapter> {
     val document = Jsoup.parse(html, url)
-    val chapterUrlRegex = Regex("""^${Regex.escape(baseUrl)}/truyen-hentai/[^/?#]+/[^/?#]+/?$""")
 
-    val allCandidateLinks = document.select("a[href]")
-        .filter { chapterUrlRegex.matches(it.absUrl("href")) }
+    // Slug của CHÍNH bộ truyện đang bóc tách, trích từ url trang bộ (VD ".../readers-paradise"
+    // -> "readers-paradise"). Không suy ra được slug thì không thể neo phạm vi an toàn.
+    val slug = url.substringAfter("/truyen-hentai/", "")
+        .substringBefore('/').substringBefore('?').substringBefore('#')
+        .ifBlank { null }
+        ?: throw Exception("$functionName: cannot extract manga slug from $url")
+    val chapterUrlRegex = Regex(
+        """^${Regex.escape(baseUrl)}/truyen-hentai/${Regex.escape(slug)}/[^/?#]+/?$""",
+    )
 
-    val scope = findLargestSiblingGroupContainer(allCandidateLinks)
-    val scopedLinks = if (scope != null) {
-        scope.select("a[href]").filter { chapterUrlRegex.matches(it.absUrl("href")) }
+    fun candidateLinksIn(scope: Element) = scope.select("a[href]").filter { chapterUrlRegex.matches(it.absUrl("href")) }
+
+    val chapterListBlock = document.selectFirst("div.chapter-list")
+    val scopedLinks = if (chapterListBlock != null) {
+        candidateLinksIn(chapterListBlock)
     } else {
-        allCandidateLinks
+        val allCandidateLinks = candidateLinksIn(document)
+        val scope = findLargestSiblingGroupContainer(allCandidateLinks)
+        if (scope != null) candidateLinksIn(scope) else allCandidateLinks
     }
 
     val chapters = scopedLinks
         .distinctBy { it.absUrl("href").trimEnd('/') }
         .map { link -> chapterFromLink(link, chapterFactory) }
-        // Thứ tự chương trong DOM của fixture thật KHÔNG đơn điệu tăng dần (VD: chap-3 đứng
-        // trước chap-2), nên không thể coi "DOM đảo ngược" là "mới nhất trước". Sắp lại theo số
-        // chương trích từ url (giảm dần) để chương số lớn nhất luôn đứng đầu, đúng chuẩn Suwayomi.
-        .sortedByDescending { it.chapter_number }
+        // Thứ tự DOM trong fixture thật là cũ->mới (đo 2026-08-17: chap-2..chap-20 theo đúng vị
+        // trí đăng, kể cả chương đặt tên riêng "tessia-..." nằm đúng giữa chap-7 và chap-8; 2
+        // chương đầu "chap-3" đứng trước "chap-2" là site tự xếp lạ, CHẤP NHẬN làm chân lý, không
+        // sort lại theo số). Đảo ngược DOM để chương mới nhất lên đầu, đúng chuẩn Suwayomi.
+        .reversed()
 
     if (chapters.isEmpty()) {
         throw Exception("$functionName: empty result from $url")
@@ -153,9 +181,10 @@ private fun chapterFromLink(link: Element, chapterFactory: () -> SChapter): SCha
     url = toUrlWithoutDomain(absHref)
     name = link.selectFirst(".chapter-list-title")?.text()?.ifBlank { null }
         ?: link.attr("title").ifBlank { link.text() }
-    // Số chương dùng để sắp xếp "mới nhất trước": lấy từ slug dạng "chap-<số>" ở cuối url. Chương
-    // đặt tên riêng (không theo mẫu số, VD "tessia-eralith-...") nhận -1f để luôn xếp sau mọi
-    // chương có số — không có markup ngày đăng nào trên trang này để suy ra vị trí đúng hơn.
+    // chapter_number KHÔNG dùng để sắp xếp (xem comment ở parseChapterList — thứ tự nền là DOM
+    // đảo ngược), chỉ trích để điền field này cho Suwayomi (nó cần chapter_number để đối chiếu
+    // "đã đọc tới đâu"). Lấy từ slug dạng "chap-<số>" ở cuối url; chương đặt tên riêng (không
+    // theo mẫu số, VD "tessia-eralith-...") nhận -1f vì không có số nào để trích.
     chapter_number = Regex("""chap-(\d+(?:\.\d+)?)/?$""").find(absHref)
         ?.groupValues?.get(1)?.toFloatOrNull() ?: -1f
     // Không có markup ngày đăng cho khối chương trên trang này (chỉ có "N Lượt xem") — không bịa
