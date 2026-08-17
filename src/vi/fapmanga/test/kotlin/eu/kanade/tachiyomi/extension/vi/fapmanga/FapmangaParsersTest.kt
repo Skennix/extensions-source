@@ -27,6 +27,8 @@ class FapmangaParsersTest {
 
     private fun parseChapters(html: String, functionName: String, url: String, baseUrl: String = BASE_URL) = parseChapterList(html, baseUrl, functionName, url) { TestChapter() }
 
+    private fun parsePages(html: String, functionName: String, url: String, baseUrl: String = BASE_URL) = parsePageList(html, baseUrl, functionName, url)
+
     // 4.1: danh-sach.html parse được, danh sách không rỗng.
     @Test
     fun `parseMangaList tra ve danh sach khong rong voi fixture danh-sach`() {
@@ -385,5 +387,79 @@ class FapmangaParsersTest {
         val manga = parseDetails(html, "https://fapmanga.com/truyen-hentai/readers-paradise")
 
         assertEquals("Hentai, Manhwa", manga.genre)
+    }
+
+    // 6.1: fixture chuong.html có 61 ảnh CDN thật (đếm tay 2026-08-17: grep "chap-2-<n>.webp" trong
+    // khối .reader), phải trả về đúng số đó, không rỗng.
+    @Test
+    fun `parsePageList tra ve danh sach anh khong rong voi fixture chuong`() {
+        val html = loadFixture("chuong.html")
+        val pages = parsePages(html, "getPageList", "https://fapmanga.com/truyen-hentai/readers-paradise/chap-2")
+
+        val soAnhDemTay = 61
+        assertEquals("Số ảnh phải khớp đúng số đếm tay từ fixture", soAnhDemTay, pages.size)
+    }
+
+    // 6.2: fixture chuong.html CÓ ảnh khác host (ad banner "cdn.hentai.pictures" trong .ad-header,
+    // ảnh đếm truy cập dạng "data:" URI ở footer) — mọi imageUrl trả về phải là host CDN thật,
+    // không được lẫn 2 ảnh đó vào kết quả.
+    @Test
+    fun `parsePageList chi nhan anh host cdn khong lan anh khac host`() {
+        val html = loadFixture("chuong.html")
+        val pages = parsePages(html, "getPageList", "https://fapmanga.com/truyen-hentai/readers-paradise/chap-2")
+
+        pages.forEach { page ->
+            assertTrue(
+                "imageUrl phải thuộc host cdn.fapmanga.com, không lẫn ảnh khác host: ${page.imageUrl}",
+                page.imageUrl?.let { java.net.URI(it).host } == "cdn.fapmanga.com",
+            )
+        }
+    }
+
+    // 6.3: thứ tự ảnh phải giữ NGUYÊN thứ tự xuất hiện trong HTML (KHÔNG sort theo alphabet, vì
+    // "-10.webp" sẽ đứng trước "-2.webp" theo alphabet — gãy đúng thứ tự đọc thật), index liên tục
+    // từ 0.
+    @Test
+    fun `parsePageList giu dung thu tu xuat hien trong HTML, index lien tuc tu 0`() {
+        val html = loadFixture("chuong.html")
+        val pages = parsePages(html, "getPageList", "https://fapmanga.com/truyen-hentai/readers-paradise/chap-2")
+
+        assertTrue(
+            "Ảnh đầu tiên phải kết thúc bằng -1.webp: ${pages[0].imageUrl}",
+            pages[0].imageUrl?.endsWith("-1.webp") == true,
+        )
+        assertTrue(
+            "Ảnh thứ hai phải kết thúc bằng -2.webp: ${pages[1].imageUrl}",
+            pages[1].imageUrl?.endsWith("-2.webp") == true,
+        )
+        assertTrue(
+            "Ảnh thứ ba phải kết thúc bằng -3.webp: ${pages[2].imageUrl}",
+            pages[2].imageUrl?.endsWith("-3.webp") == true,
+        )
+        pages.forEachIndexed { i, page ->
+            assertEquals("Page.index phải liên tục từ 0, đúng vị trí trong danh sách", i, page.index)
+        }
+    }
+
+    // 6.4: trang không có ảnh CDN nào (fixture chế chuong-rong.html — xoá hết <img> CDN, chỉ còn
+    // ad banner khác host) phải ném lỗi chứa cả functionName lẫn url.
+    @Test
+    fun `parsePageList nem loi khi fixture chuong-rong khong co anh cdn nao`() {
+        val html = loadFixture("chuong-rong.html")
+        val functionName = "parsePageList-test-caller"
+        val url = "https://fapmanga.com/truyen-hentai/readers-paradise/chap-2"
+
+        val loi = assertThrows(Exception::class.java) {
+            parsePages(html, functionName, url)
+        }
+
+        assertTrue(
+            "Thông báo lỗi phải chứa tên hàm gọi vào ($functionName)",
+            loi.message?.contains(functionName) == true,
+        )
+        assertTrue(
+            "Thông báo lỗi phải chứa url truyền vào ($url)",
+            loi.message?.contains(url) == true,
+        )
     }
 }

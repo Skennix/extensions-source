@@ -1,12 +1,25 @@
 package eu.kanade.tachiyomi.extension.vi.fapmanga
 
 import eu.kanade.tachiyomi.source.model.MangasPage
+import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.source.model.SChapter
 import eu.kanade.tachiyomi.source.model.SManga
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.net.URI
 import java.net.URISyntaxException
+
+// Host CDN ảnh trang chương của FapManga, đo thật 2026-08-17 trên fixture chuong.html (61 ảnh
+// "cdn.fapmanga.com/manga/.../readers-paradise-chap-2-<n>.webp"). Neo bằng SO KHỚP HOST TUYỆT ĐỐI
+// (host == CDN_HOST), KHÔNG dùng "host kết thúc bằng host của baseUrl": trang chương chứa hẳn 2
+// host khác (ad banner "cdn.hentai.pictures", "data:" URI) không kết thúc bằng "fapmanga.com" nên
+// cả 2 cách đều loại được — nhưng site tự quảng cáo "mirror domains" (CSS .mirror-bar/.footer-mirrors
+// trong chính fixture) nghĩa là domain TRANG (baseUrl) có thể đổi theo mirror trong khi CDN ảnh
+// (hạ tầng lưu trữ, tách biệt khỏi domain hiển thị) nhiều khả năng KHÔNG đổi theo — so khớp cứng
+// theo baseUrl sẽ gãy ngay khi Suwayomi cấu hình mirror khác domain gốc. Đổi CDN thật thì sửa Ở ĐÂY.
+// internal (không private): Fapmanga.kt (configureClient) cần đúng host này để đặt nhịp rate-limit
+// riêng cho CDN, tránh 2 nơi định nghĩa host CDN lệch nhau.
+internal const val CDN_HOST = "cdn.fapmanga.com"
 
 /**
  * Hàm thuần (không mạng, không suspend) để bóc tách danh sách truyện từ một trang HTML
@@ -174,6 +187,48 @@ fun parseChapterList(
     }
 
     return chapters
+}
+
+/**
+ * Hàm thuần bóc tách danh sách ảnh trang từ trang chương của FapManga.
+ *
+ * Trang chương (fixture chuong.html) chứa MỌI ảnh (kể cả ad banner ngoài host, ảnh đếm truy cập
+ * dạng "data:" URI) lẫn trong cùng một trang phẳng, không có class riêng đáng tin cho khối ảnh đọc
+ * (".reader-img" hiện có, nhưng site có thể đổi bất kỳ lúc nào — CHỌN neo theo host CDN thay vì
+ * class, vì host là điều duy nhất KHÔNG thể lẫn giữa ảnh đọc thật và ad/tracking).
+ *
+ * GIỮ NGUYÊN thứ tự xuất hiện trong HTML (document.select trả theo thứ tự DOM), index từ 0 — khác
+ * hẳn parseChapterList (đảo ngược DOM): trang chương không có khái niệm "mới nhất lên đầu", thứ tự
+ * đọc phải đúng thứ tự vẽ trên trang.
+ */
+fun parsePageList(
+    html: String,
+    baseUrl: String,
+    functionName: String,
+    url: String,
+    pageFactory: (Int, String) -> Page = { index, imageUrl -> Page(index, imageUrl = imageUrl) },
+): List<Page> {
+    val document = Jsoup.parse(html, url)
+
+    val pages = document.select("img[src]")
+        .filter { hostOfOrNull(it.absUrl("src")) == CDN_HOST }
+        .mapIndexed { index, img -> pageFactory(index, img.absUrl("src")) }
+
+    if (pages.isEmpty()) {
+        throw Exception("$functionName: empty result from $url")
+    }
+
+    return pages
+}
+
+// URI(...).host thay vì kéo OkHttp (HttpUrl) vào chỉ để đọc host, giữ hàm thuần không phụ thuộc
+// mạng. Trả null cho url không hợp lệ hoặc không có host (VD "data:image/gif;base64,...", một URI
+// hợp lệ nhưng opaque, không có authority/host) để bị lọc ra êm như một host không khớp CDN_HOST,
+// không làm sập cả hàm.
+private fun hostOfOrNull(absoluteUrl: String): String? = try {
+    URI(absoluteUrl).host
+} catch (e: URISyntaxException) {
+    null
 }
 
 private fun chapterFromLink(link: Element, chapterFactory: () -> SChapter): SChapter = chapterFactory().apply {
