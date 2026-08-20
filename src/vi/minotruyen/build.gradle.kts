@@ -6,7 +6,7 @@ plugins {
 
 keiyoushi {
     name = "MinoTruyen"
-    versionCode = 5
+    versionCode = 6
     contentWarning = ContentWarning.MIXED
     libVersion = "1.6"
 
@@ -18,7 +18,7 @@ keiyoushi {
         name = "MinoTruyen Manga"
         lang = "vi"
         baseUrl {
-            custom("https://minotruyenv5.xyz")
+            custom("https://minotruyenv7.xyz")
         }
     }
 
@@ -26,7 +26,7 @@ keiyoushi {
         name = "MinoTruyen Comics"
         lang = "vi"
         baseUrl {
-            custom("https://minotruyenv5.xyz")
+            custom("https://minotruyenv7.xyz")
         }
     }
 
@@ -34,7 +34,7 @@ keiyoushi {
         name = "MinoTruyen Hentai"
         lang = "vi"
         baseUrl {
-            custom("https://minotruyenv5.xyz")
+            custom("https://minotruyenv7.xyz")
         }
     }
 }
