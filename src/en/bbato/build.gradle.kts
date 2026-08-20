@@ -5,13 +5,15 @@ plugins {
 }
 
 keiyoushi {
-    name = "Bbato"
-    versionCode = 1
+    name = "Bbato / xBato"
+    versionCode = 2
     contentWarning = ContentWarning.MIXED
     libVersion = "1.4"
 
     source {
         lang = "en"
-        baseUrl = "https://bbato.com"
+        baseUrl {
+            custom("https://xbato.co.uk")
+        }
     }
 }
