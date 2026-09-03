@@ -78,13 +78,11 @@ abstract class ComicVN : KeiSource() {
 
     // ============================== Popular ===============================
 
-    override suspend fun getPopularManga(page: Int): MangasPage =
-        parseMangaPage(client.get(browseUrl(page, sort = "xem-nhieu")))
+    override suspend fun getPopularManga(page: Int): MangasPage = parseMangaPage(client.get(browseUrl(page, sort = "xem-nhieu")))
 
     // =============================== Latest ===============================
 
-    override suspend fun getLatestUpdates(page: Int): MangasPage =
-        parseMangaPage(client.get(browseUrl(page, sort = "moi-nhat")))
+    override suspend fun getLatestUpdates(page: Int): MangasPage = parseMangaPage(client.get(browseUrl(page, sort = "moi-nhat")))
 
     // =============================== Search ===============================
 
@@ -124,11 +122,10 @@ abstract class ComicVN : KeiSource() {
         return parseMangaPage(client.get(url))
     }
 
-    private fun browseUrl(page: Int, sort: String): HttpUrl =
-        "$baseUrl/danh-muc/tat-ca-truyen".toHttpUrl().newBuilder()
-            .addQueryParameter("sort", sort)
-            .addQueryParameter("page", page.toString())
-            .build()
+    private fun browseUrl(page: Int, sort: String): HttpUrl = "$baseUrl/danh-muc/tat-ca-truyen".toHttpUrl().newBuilder()
+        .addQueryParameter("sort", sort)
+        .addQueryParameter("page", page.toString())
+        .build()
 
     private fun parseMangaPage(response: Response): MangasPage {
         val document = response.asJsoup()
@@ -155,8 +152,7 @@ abstract class ComicVN : KeiSource() {
      * BAY (bia): anh bia nam o `data-src` (lazysizes), con `src` la anh placeholder
      * `images/default.png` dung chung. Doc `src` se ra 36 anh giong het nhau ca trang.
      */
-    private fun Element.thumbnail(): String? =
-        absUrl("data-src").ifBlank { null } ?: absUrl("src").ifBlank { null }
+    private fun Element.thumbnail(): String? = absUrl("data-src").ifBlank { null } ?: absUrl("src").ifBlank { null }
 
     // =========================== Manga Details ============================
 
@@ -180,7 +176,7 @@ abstract class ComicVN : KeiSource() {
 
         return SMangaUpdate(
             parseMangaDetails(document),
-            fetchChapterList(manga),
+            layDanhSachChuong(manga),
         )
     }
 
@@ -222,7 +218,11 @@ abstract class ComicVN : KeiSource() {
      * Vi vay o day kiem tra tuong minh `status` va `chaptersHtml`, va NEM LOI thay vi
      * tra ve danh sach rong.
      */
-    private suspend fun fetchChapterList(manga: SManga): List<SChapter> {
+    // Ten KHONG duoc la `fetchChapterList`: KeiSource da co
+    // `fetchChapterList(SManga): Observable<List<SChapter>>` (khong suspend), nen trung ten +
+    // trung kieu tham so lam Kotlin coi day la mot phep nap chong hong. Da tra gia mot luot
+    // build 2026-09-04. `manhuavn` thoat vi tham so cua no la Document, khac kieu.
+    private suspend fun layDanhSachChuong(manga: SManga): List<SChapter> {
         val mangaId = mangaIdRegex.find(manga.url)?.groupValues?.get(1)
             ?: throw Exception("Khong doc duoc ma truyen tu duong dan: ${manga.url}")
 

@@ -3,7 +3,10 @@ package eu.kanade.tachiyomi.extension.vi.manhuavn
 import eu.kanade.tachiyomi.source.model.Filter
 
 /** Mot lua chon co nhan hien thi va gia tri dua vao URL. */
-class UriPart(name: String, val value: String) {
+// `val` la bat buoc: tham so ham dung khong co `val` chi song trong khoi khoi tao,
+// khong dung duoc trong than mot ham thanh vien nhu toString(). Bo `val` => build do
+// "Unresolved reference 'name'". Da tra gia mot luot build 2026-09-04.
+class UriPart(val name: String, val value: String) {
     override fun toString(): String = name
 }
 
