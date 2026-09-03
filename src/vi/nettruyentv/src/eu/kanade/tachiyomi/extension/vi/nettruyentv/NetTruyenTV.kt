@@ -75,25 +75,22 @@ abstract class NetTruyenTV : WPComics() {
     // ============================== Danh sách ==============================
 
     /** WordPress phân trang bằng `/page/N/`; trang 1 là chính đường dẫn gốc. */
-    private fun listUrl(base: String, page: Int): String =
-        if (page > 1) "$base/page/$page/" else "$base/"
+    private fun listUrl(base: String, page: Int): String = if (page > 1) "$base/page/$page/" else "$base/"
 
     override fun popularMangaNextPageSelector() = "a.next.page-numbers"
 
-    override suspend fun getPopularManga(page: Int): MangasPage =
-        parseMangaPage(
-            client.get(listUrl(baseUrl, page)),
-            popularMangaSelector(),
-            ::popularMangaFromElement,
-        )
+    override suspend fun getPopularManga(page: Int): MangasPage = parseMangaPage(
+        client.get(listUrl(baseUrl, page)),
+        popularMangaSelector(),
+        ::popularMangaFromElement,
+    )
 
     // Site không có bảng xếp hạng riêng để lấy, nên "Phổ biến" và "Mới cập nhật" là một.
     override suspend fun getLatestUpdates(page: Int): MangasPage = getPopularManga(page)
 
     // Ô truyện ở lưới tìm kiếm và lưới trang chủ là cùng một markup. Dùng lại để tránh
     // selector `div.image a img` của lớp cha — nó dùng `!!` nên ô thiếu ảnh sẽ ném lỗi.
-    override fun searchMangaFromElement(element: Element): SManga =
-        popularMangaFromElement(element)
+    override fun searchMangaFromElement(element: Element): SManga = popularMangaFromElement(element)
 
     // ============================== Tìm kiếm ==============================
 
@@ -148,15 +145,14 @@ abstract class NetTruyenTV : WPComics() {
 
     // ============================== Chi tiết ==============================
 
-    override fun mangaDetailsParse(document: Document): SManga =
-        super.mangaDetailsParse(document).apply {
-            // Phần mô tả nằm trong `div.shortened` và gồm nhiều thẻ `div`, không phải `p`
-            // như selector mặc định của lớp cha.
-            document.select("article#item-detail div.detail-content div.shortened")
-                .joinToString("\n\n") { it.wholeText().trim() }
-                .takeIf { it.isNotBlank() }
-                ?.let { description = it }
-        }
+    override fun mangaDetailsParse(document: Document): SManga = super.mangaDetailsParse(document).apply {
+        // Phần mô tả nằm trong `div.shortened` và gồm nhiều thẻ `div`, không phải `p`
+        // như selector mặc định của lớp cha.
+        document.select("article#item-detail div.detail-content div.shortened")
+            .joinToString("\n\n") { it.wholeText().trim() }
+            .takeIf { it.isNotBlank() }
+            ?.let { description = it }
+    }
 
     // ============================== Trang ảnh ==============================
 

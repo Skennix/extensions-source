@@ -16,24 +16,26 @@ class Genre(name: String, val id: String) : Filter.CheckBox(name)
 
 class GenreFilter(genres: List<Genre>) : Filter.Group<Genre>("The loai", genres)
 
-class StatusFilter : Filter.Select<Option>(
-    "Tinh trang",
-    arrayOf(
-        Option("Tất cả", ""),
-        Option("Đang tiến hành", "2"),
-        Option("Đã hoàn tất", "1"),
-    ),
-)
+class StatusFilter :
+    Filter.Select<Option>(
+        "Tinh trang",
+        arrayOf(
+            Option("Tất cả", ""),
+            Option("Đang tiến hành", "2"),
+            Option("Đã hoàn tất", "1"),
+        ),
+    )
 
-class SortFilter : Filter.Select<Option>(
-    "Sap xep",
-    arrayOf(
-        Option("Tất cả", ""),
-        Option("Xem nhiều", "xem-nhieu"),
-        Option("Mới nhất", "moi-nhat"),
-        Option("Cũ nhất", "cu-nhat"),
-    ),
-)
+class SortFilter :
+    Filter.Select<Option>(
+        "Sap xep",
+        arrayOf(
+            Option("Tất cả", ""),
+            Option("Xem nhiều", "xem-nhieu"),
+            Option("Mới nhất", "moi-nhat"),
+            Option("Cũ nhất", "cu-nhat"),
+        ),
+    )
 
 /**
  * 82 the loai, lay tu <select name="cate">.

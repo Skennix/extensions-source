@@ -46,13 +46,11 @@ abstract class ManhuaVN : KeiSource() {
 
     // ============================== Popular ===============================
 
-    override suspend fun getPopularManga(page: Int): MangasPage =
-        parseMangaPage(client.get(listUrl(page, status = "0", sort = SORT_HOT)), LIST_PAGE_SIZE)
+    override suspend fun getPopularManga(page: Int): MangasPage = parseMangaPage(client.get(listUrl(page, status = "0", sort = SORT_HOT)), LIST_PAGE_SIZE)
 
     // =============================== Latest ===============================
 
-    override suspend fun getLatestUpdates(page: Int): MangasPage =
-        parseMangaPage(client.get(listUrl(page, status = "0", sort = SORT_LATEST)), LIST_PAGE_SIZE)
+    override suspend fun getLatestUpdates(page: Int): MangasPage = parseMangaPage(client.get(listUrl(page, status = "0", sort = SORT_LATEST)), LIST_PAGE_SIZE)
 
     // =============================== Search ===============================
 
@@ -74,8 +72,7 @@ abstract class ManhuaVN : KeiSource() {
         }
     }
 
-    private fun listUrl(page: Int, status: String, sort: String) =
-        "$baseUrl/danhsach/P$page/index.html?status=$status&sort=$sort"
+    private fun listUrl(page: Int, status: String, sort: String) = "$baseUrl/danhsach/P$page/index.html?status=$status&sort=$sort"
 
     /**
      * Site ma hoa tu khoa vao duong dan chu khong vao query string.
