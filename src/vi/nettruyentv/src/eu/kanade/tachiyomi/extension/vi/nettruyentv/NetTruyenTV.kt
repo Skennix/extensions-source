@@ -40,16 +40,18 @@ import java.util.Locale
  * 5. **Ảnh chương nằm trong IFRAME sang host khác** (`abc.newfeedcdn.site`), không nằm
  *    trong HTML trang chương. Xem [getPageList].
  *
- * ⚠️ **Nguồn ảnh THƯA — phần lớn chương không tải được, và đây KHÔNG phải lỗi parser.**
- * Host phát ảnh trả `200` kèm **thân rỗng 0 byte** cho rất nhiều chương. Đo One Piece
- * (`id=906`) trên 15 chương rải đều: chỉ 3 chương (2, 10, 1191) có nội dung, 12 chương
- * còn lại 0 byte — gồm cả chương 1, 1190 và các chương mới sát đỉnh. Đã loại trừ nguyên
- * nhân header: chương 500 ra 0 byte ở **cả bốn** biến thể (không header · chỉ UA ·
- * chỉ Referer · cả hai), trong khi chương 1191 luôn trả đủ 7.189 byte.
+ * 6. **Ảnh chương rỗng là ca RIÊNG LẺ, không phải đặc tính của nguồn.** Host phát ảnh
+ *    thỉnh thoảng trả `200` kèm thân rỗng 0 byte cho một chương. Đã loại trừ nguyên nhân
+ *    header: cùng một chương ra 0 byte ở **cả bốn** biến thể (không header · chỉ UA ·
+ *    chỉ Referer · cả hai) ⇒ là **site không có ảnh chương đó**, không phải extension
+ *    đọc sai. Gặp chương rỗng thì `curl` thẳng URL iframe của đúng chương đó để phân biệt.
  *
- * ⇒ Người dùng sẽ gặp nhiều chương mở ra **rỗng**. Trước khi đi sửa [getPageList], hãy
- * `curl` thẳng URL iframe của đúng chương đó: ra 0 byte nghĩa là **site không có ảnh**,
- * không phải extension đọc sai.
+ * 🔴 **Đừng suy ra tỉ lệ của nguồn từ MỘT bộ.** Phép đo đầu tiên chạy trên đúng One Piece
+ * (`id=906`) rồi kết luận "nguồn ảnh THƯA, phần lớn chương không tải được" cho cả site.
+ * Đo lại 2026-09-04 trên **5 bộ × 3 chương rải đều** (đầu · giữa · cuối) qua proxy:
+ * **14/15 chương có ảnh = 93%**, mỗi chương 86–194 ảnh; và chính One Piece cũng ra 2/3.
+ * Ảnh tải về là **WebP thật** (magic `52494646`, ~65 KB/ảnh), **không cần `Referer`**.
+ * ⇒ Nguồn này dùng được. Mọi tỉ lệ về nguồn phải đo trên **≥5 bộ** và báo cả phương sai.
  *
  * Những chỗ site GIỐNG wpcomics, dùng lại được nguyên:
  * - `article#item-detail` cùng `li.author/li.status/li.kind/div.col-image` ⇒ chi tiết truyện.

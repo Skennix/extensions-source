@@ -1,5 +1,8 @@
 package eu.kanade.tachiyomi.extension.vi.comicvn
 
+import androidx.preference.EditTextPreference
+import androidx.preference.PreferenceScreen
+import eu.kanade.tachiyomi.source.ConfigurableSource
 import eu.kanade.tachiyomi.source.model.Filter
 import eu.kanade.tachiyomi.source.model.FilterList
 import eu.kanade.tachiyomi.source.model.MangasPage
@@ -9,13 +12,17 @@ import eu.kanade.tachiyomi.source.model.SManga
 import eu.kanade.tachiyomi.source.model.SMangaUpdate
 import eu.kanade.tachiyomi.util.asJsoup
 import keiyoushi.annotation.Source
+import keiyoushi.network.addCookie
 import keiyoushi.network.get
+import keiyoushi.network.post
 import keiyoushi.network.rateLimit
 import keiyoushi.source.KeiSource
+import keiyoushi.utils.getPreferencesLazy
 import keiyoushi.utils.parseAs
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 import okhttp3.CacheControl
+import okhttp3.FormBody
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
@@ -38,12 +45,32 @@ import kotlin.time.Duration.Companion.seconds
  * `objectid` la ObjectId cua Mongo - 24 ky tu hex.
  */
 @Source
-abstract class ComicVN : KeiSource() {
+abstract class ComicVN :
+    KeiSource(),
+    ConfigurableSource {
 
     private val siteHost get() = baseUrl.toHttpUrl().host
 
+    /**
+     * ObjectId cua BO dang mo, dung lam cookie `history_readed` - xem BAY 5 trong [getPageList].
+     *
+     * 🔴 PHAI di qua `addCookie` cua framework, KHONG duoc gan bang
+     * `headersBuilder().add("Cookie", …)`. Do 2026-09-04: header tang ung dung bi
+     * `BridgeInterceptor` cua OkHttp GHI DE bang noi dung cookie jar ngay khi da co phien
+     * dang nhap => cookie bien mat dung luc no bat dau can thiet, va trieu chung la may chu
+     * `302` im lang. `addCookie` cai dat bang `addNetworkInterceptor` nen chay SAU
+     * `BridgeInterceptor` va GOP vao header `Cookie` da co.
+     *
+     * ⚠️ Bien nay dung chung cho ca nguon. Tai nhieu BO cung luc thi luot sau co the ghi de
+     * luot truoc; hau qua toi da la mot chuong bao loi va tai lai duoc, khong hong du lieu.
+     */
+    @Volatile
+    private var mangaIdCookie: String? = null
+
     override fun OkHttpClient.Builder.configureClient() = apply {
         rateLimit(2, 1.seconds) { it.host.isSiteHost() }
+
+        addCookie { mangaIdCookie?.let { listOf("history_readed" to it) }.orEmpty() }
 
         // BAY 2: CDN anh doi DONG THOI Referer va User-Agent; thieu mot trong hai la 403,
         // va Referer tro sang ten mien khac cung 403 (do 2026-09-03: UA don 403, Referer don 403,
@@ -288,23 +315,76 @@ abstract class ComicVN : KeiSource() {
      * Jsoup xu ly dung ca hai kieu nhay nen o day dung Jsoup, khong dung regex.
      */
     override suspend fun getPageList(chapter: SChapter): List<Page> {
-        val document = client.get(getChapterUrl(chapter), CacheControl.FORCE_NETWORK).asJsoup()
+        val chapterUrl = getChapterUrl(chapter)
+        val response = client.get(chapterUrl, CacheControl.FORCE_NETWORK)
+        val landedUrl = response.request.url.toString()
+        var document = response.asJsoup()
 
-        // Chuong TRA PHI tra ve mot khuon trang KHAC HAN (html lang="en", khong he co
-        // `#lightgallery2` / `.comicDetail2`, chi co moi giao dien "Xu / Dang nhap").
-        // Do 2026-09-03 tren "Dao Kiem Tieu": 278/295 chuong bi khoa, va trang chuong 295
-        // tra 200 kem 238 KB nhung KHONG mot the anh truyen nao.
+        // BAY 5: thieu cookie `history_readed` thi may chu 302 VE TRANG BO va KHONG bao loi gi.
+        // Do 2026-09-04 tren "chapter-37" cua "Thien Tu Truyen Ky 6", bon to hop:
+        //   an danh, khong cookie      -> 145.934 B, co khoi `.lock-screen`, 0 anh
+        //   an danh + cookie           -> 145.934 B, co khoi `.lock-screen`, 0 anh
+        //   dang nhap, khong cookie    -> 82.928 B, 302 ve trang bo, 0 anh
+        //   dang nhap + cookie         -> 164.543 B, co `#lightgallery2`, 87 anh
+        // => Hai dieu kien, KHONG thay nhau duoc. Cookie mang ObjectId cua BO (khong phai cua
+        //    chuong), va no KHONG nam trong bat ky file JS nao cua site - chi lo ra khi so
+        //    cookie cua trinh duyet voi cookie ma client dang gui.
+        //
+        // Khong the gan cookie ngay o luot dau: `getPageList` chi nhan `SChapter`, ma duong dan
+        // chuong khong chua ObjectId cua BO. Nen lay no tu URL DA CHUYEN HUONG (chinh la trang
+        // bo) hoac tu nut "Quay lai", roi tai lai mot luot.
+        var mangaId: String? = null
+        if (document.pageContainer() == null) {
+            // 🔴 THU TU LA BAT BIEN: nut "Quay lai" TRUOC, `landedUrl` sau.
+            // `mangaIdRegex` khop ca duong dan CHUONG (`…/chapter-37-{oid}.html`), ma luot
+            // dau KHONG he chuyen huong khi chua dang nhap => `landedUrl` chinh la duong dan
+            // chuong, va lay theo no se ra ObjectId cua CHUONG chu khong phai cua BO.
+            // Da dinh 2026-09-04: cookie mang oid sai, may chu van 302, va trieu chung lo ra
+            // duoi dang "cau bao loi doi tu 'doi dang nhap' sang 'can Xu'".
+            mangaId = document.selectFirst("a.back[href]")?.let {
+                mangaIdRegex.find(it.attr("abs:href"))?.groupValues?.get(1)
+            } ?: landedUrl.takeIf { it != chapterUrl }
+                ?.let { mangaIdRegex.find(it)?.groupValues?.get(1) }
+            if (mangaId != null) {
+                document = taiTrangChuong(chapterUrl, mangaId)
+            }
+        }
+
+        // Van rong => can DANG NHAP (trang mang khoi `.lock-screen` voi dung chu
+        // "Vui long dang nhap de tiep tuc!"). Chi thu khi user DA khai tai khoan, va
+        // thu DUNG MOT LAN - dang nhap hong ma cu thu lai la tu khoa tai khoan.
+        if (document.pageContainer() == null &&
+            document.selectFirst(".lock-screen") != null &&
+            username.isNotEmpty() && password.isNotEmpty() &&
+            dangNhap()
+        ) {
+            document = taiTrangChuong(chapterUrl, mangaId)
+        }
+
         // => Phai bao loi ro rang, tuyet doi khong tra ve danh sach rong (app se hieu nham
         //    thanh "chuong 0 trang" va hong im lang).
-        val container = document.selectFirst("#lightgallery2")
-            ?: document.selectFirst(".comicDetail2")
+        val container = document.pageContainer()
             ?: throw Exception(
-                "Chuong nay can tai khoan tra phi cua site (mo khoa bang Xu) nen khong co anh",
+                when {
+                    document.selectFirst(".lock-screen") == null ->
+                        "Chuong nay can tai khoan tra phi cua site (mo khoa bang Xu) nen khong co anh"
+                    username.isEmpty() || password.isEmpty() ->
+                        "Chuong nay doi DANG NHAP: khai tai khoan cua site trong Cau hinh nguon"
+                    else ->
+                        "Dang nhap that bai hoac tai khoan khong mo duoc chuong nay"
+                },
             )
 
-        // Chi lay anh truyen: duong dan anh trang luon di qua `/chapter/` tren CDN,
-        // nen loc nay gat duoc banner/loading.gif nam chung khoi.
-        val images = container.select("img[src*='/chapter/']")
+        // BAY 6: anh trang co HAI dang URL, khong phai mot.
+        // Do 2026-09-04 tren "chapter-37": 87 anh = 83 anh CDN `/cdn/chapter/...`
+        // + 4 anh `/static?token=...` nam RAI RAC (vi tri 4, 10, 11, 30 - khong quy luat).
+        // Loc cu `img[src*='/chapter/']` bat 83/87 => THIEU 4 TRANG GIUA CHUONG, IM LANG.
+        //
+        // ⚠️ Dang `/static?token=` di qua duong CHAN THEO PHIEN: tai ma khong kem cookie thi
+        // van tra `200` nhung noi dung la HTML 43 KB `<title>Yeu cau dang nhap</title>`.
+        // Tai kem cookie phien thi ra JPEG that (do: 1.904.508 B, magic `ffd8ffe0`).
+        // => `200` KHONG co nghia la nhan duoc anh. Khau tai anh phai kiem lai kieu noi dung.
+        val images = container.select("img[src]").filter { it.isPageImage() }
         if (images.isEmpty()) {
             throw Exception(
                 "Chuong nay can tai khoan tra phi cua site (mo khoa bang Xu) nen khong co anh",
@@ -323,22 +403,118 @@ abstract class ComicVN : KeiSource() {
         // Bo phan "-{thu tu}.{duoi}" thi con khoa dinh danh cua chuong; giu doan dau
         // co cung khoa voi anh thu nhat la ra dung pham vi mot chuong. Cach nay khong
         // phu thuoc vao cach dat ten chuong (co bo dat "chapter-800-het", "chapter-1279-1280-het").
-        val firstKey = images.first()!!.imageKey()
-        val pageImages = images.takeWhile { it.imageKey() == firstKey }
+        //
+        // 🔴 BAY 6b, keo theo tu BAY 6: anh dang `/static?token=` KHONG CO TEN TEP nen khong
+        // suy ra duoc khoa. Neu coi moi anh nhu vay la "khoa khac" thi `takeWhile` DUNG NGAY
+        // o anh token dau tien - do 2026-09-04: chuong 87 trang se chi con 3 trang.
+        // => Anh khong suy ra duoc khoa phai duoc coi la THUOC CHUONG DANG CHAY.
+        var chapterKey: String? = null
+        val pageImages = images.takeWhile { image ->
+            val key = image.imageKeyOrNull()
+            when {
+                key == null -> true
+                chapterKey == null -> {
+                    chapterKey = key
+                    true
+                }
+                else -> key == chapterKey
+            }
+        }
 
         return pageImages.mapIndexed { index, image ->
             Page(index, imageUrl = image.attr("abs:src"))
         }
     }
 
+    /** Tai trang chuong; cookie `history_readed` do [mangaIdCookie] + `addCookie` lo. */
+    private suspend fun taiTrangChuong(chapterUrl: String, mangaId: String?): Document {
+        mangaIdCookie = mangaId
+        return client.get(chapterUrl, CacheControl.FORCE_NETWORK).asJsoup()
+    }
+
+    /** Khoi chua anh trang; site dung ca hai ten tuy khuon trang. */
+    private fun Document.pageContainer(): Element? = selectFirst("#lightgallery2") ?: selectFirst(".comicDetail2")
+
+    /**
+     * Anh TRANG TRUYEN, hai dang - xem BAY 6:
+     *   `https://cdn5.<site>/cdn/chapter/...`   (phan lon)
+     *   `https://<site>/static?token=...`       (rai rac, di qua duong chan theo phien)
+     * Loc nay gat banner/loading.gif nam chung khoi.
+     */
+    private fun Element.isPageImage(): Boolean {
+        val src = attr("abs:src")
+        return src.contains("/chapter/") || src.contains("/static?token=")
+    }
+
     /**
      * Khoa dinh danh chuong suy ra tu duong dan anh: bo duoi "-{thu tu}.{duoi tep}".
      * `…/{oid}-chapter-2-0.jpg` -> `…/{oid}-chapter-2`
+     *
+     * Tra `null` khi duong dan khong mang ten tep (dang `/static?token=`) - nguoi goi phai
+     * coi truong hop do la "thuoc chuong dang chay", xem BAY 6b trong `getPageList`.
      */
-    private fun Element.imageKey(): String {
-        val src = attr("abs:src")
-        return imageIndexRegex.find(src)?.groupValues?.get(1) ?: src
+    private fun Element.imageKeyOrNull(): String? = imageIndexRegex.find(attr("abs:src"))?.groupValues?.get(1)
+
+    // ============================== Dang nhap =============================
+
+    private val preferences by getPreferencesLazy()
+
+    private inline val username: String get() = preferences.getString(PREF_USERNAME, "")!!
+    private inline val password: String get() = preferences.getString(PREF_PASSWORD, "")!!
+
+    override fun setupPreferenceScreen(screen: PreferenceScreen) {
+        EditTextPreference(screen.context).apply {
+            key = PREF_USERNAME
+            title = "Ten dang nhap"
+            summary = "De trong thi chi doc duoc chuong khong khoa"
+            setDefaultValue("")
+        }.also(screen::addPreference)
+
+        EditTextPreference(screen.context).apply {
+            key = PREF_PASSWORD
+            title = "Mat khau"
+            summary = "Chi dung de dang nhap vao chinh site nay"
+            setDefaultValue("")
+        }.also(screen::addPreference)
     }
+
+    /**
+     * POST `/passport/login`. Do 2026-09-04, hai diem sai thi hong:
+     *
+     * 1. Payload phai la TOAN BO cac o cua `form[name=formReg]`, khong phai moi
+     *    `username` + `password`. Thieu o `type` thi may chu tra
+     *    `{"status":false,"message":"Khong tim thay phuong thuc ban can"}`.
+     * 2. Duong dan KHONG duoc doan: no nam trong o an `uri_login` cua chinh trang.
+     *
+     * Phien duoc giu bang cookie jar cua app (may chu dat `thienhatruyen_session`
+     * va `XSRF-TOKEN` o dap ung nay).
+     */
+    private suspend fun dangNhap(): Boolean {
+        val home = client.get("$baseUrl/", CacheControl.FORCE_NETWORK).asJsoup()
+        val form = home.selectFirst("form[name=formReg]") ?: return false
+
+        val fields = LinkedHashMap<String, String>()
+        form.select("input[name]").forEach { fields[it.attr("name")] = it.attr("value") }
+        home.selectFirst("meta[name=csrf-token]")?.attr("content")
+            ?.takeIf { it.isNotEmpty() }?.let { fields["_token"] = it }
+        fields["username"] = username
+        fields["password"] = password
+
+        val url = fields["uri_login"]?.takeIf { it.isNotEmpty() } ?: "$baseUrl/passport/login"
+        val body = FormBody.Builder().apply { fields.forEach { (k, v) -> add(k, v) } }.build()
+        val postHeaders = headersBuilder()
+            .add("X-Requested-With", "XMLHttpRequest")
+            .add("Origin", baseUrl)
+            .apply { fields["_token"]?.let { add("X-CSRF-TOKEN", it) } }
+            .build()
+
+        return runCatching {
+            client.post(url, postHeaders, body).parseAs<LoginDto>().status
+        }.getOrDefault(false)
+    }
+
+    @Serializable
+    private class LoginDto(val status: Boolean = false, val message: String = "")
 
     // ============================== Filters ===============================
 
@@ -350,6 +526,9 @@ abstract class ComicVN : KeiSource() {
     )
 
     companion object {
+        private const val PREF_USERNAME = "username"
+        private const val PREF_PASSWORD = "password"
+
         /** ObjectId cua Mongo o cuoi duong dan truyen: `/{slug}-{objectid}.html`. */
         private val mangaIdRegex = Regex("""-([0-9a-f]{24})\.html""")
 
