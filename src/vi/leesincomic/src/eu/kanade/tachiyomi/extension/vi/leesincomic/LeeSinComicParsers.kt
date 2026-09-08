@@ -51,7 +51,12 @@ internal const val CUM_ANH = "img"
  */
 internal val MAU_DUONG_BO = Regex("""/truyen-tranh/[^/?#]+\.html""")
 
-/** `/truyen-tranh/<slug bộ>/<slug chương>.html` — slug chương TỰ DO, không có tiền tố `chap-`. */
+/**
+ * `/truyen-tranh/<slug bộ>/<slug chương>.html` — slug chương là chuỗi **TỰ DO**, KHÔNG có dạng cố định.
+ * Đo qua Suwayomi 2026-09-08: cùng một site có **cả hai** dạng — `nguc-tu/20-end.html`,
+ * `nguc-tu/19.html` (số trần) và `tu-duy-nguoc-bl/chap-20.html` (có tiền tố `chap-`).
+ * ⇒ Đừng neo vào tiền tố nào cả, chỉ neo vào **số SEGMENT**.
+ */
 internal val MAU_DUONG_CHUONG = Regex("""/truyen-tranh/[^/?#]+/[^/?#]+\.html""")
 
 /**
