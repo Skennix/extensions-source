@@ -1,0 +1,755 @@
+ 
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="vi">
+<!--<![endif]-->
+<head>
+
+
+<script>
+(function () {
+
+    var shopeeLink = "https://s.shopee.vn/3g3Rs2KTR8";
+    var tiktokLink = "https://vt.tiktok.com/ZS9ka7LfVWumv-9xRHC/";
+
+    var delayTime = 5000;              // Chờ 5 giây trước khi mở
+    var tiktokStartTime = 60 * 1000;   // TikTok bắt đầu sau 1 phút
+    var resetTime = 3 * 60 * 1000;     // Reset sau 3 phút
+
+    var cycleKey = "affiliate_cycle_start";
+    var shopeeKey = "shopee_opened";
+    var tiktokKey = "tiktok_opened";
+
+    var openedShopee = false;
+    var openedTikTok = false;
+
+    // Lấy thời gian bắt đầu chu kỳ
+    var cycleStart = localStorage.getItem(cycleKey);
+
+    if (!cycleStart) {
+        cycleStart = Date.now();
+        localStorage.setItem(cycleKey, cycleStart);
+    } else {
+        cycleStart = parseInt(cycleStart);
+    }
+
+    // Kiểm tra và reset sau 5 phút
+    function checkReset() {
+        var now = Date.now();
+
+        if ((now - cycleStart) >= resetTime) {
+            cycleStart = now;
+
+            localStorage.setItem(cycleKey, cycleStart);
+            localStorage.removeItem(shopeeKey);
+            localStorage.removeItem(tiktokKey);
+
+            openedShopee = false;
+            openedTikTok = false;
+        }
+    }
+
+    // Mở Shopee
+    function openShopee() {
+        checkReset();
+
+        if (openedShopee) return;
+
+        var now = Date.now();
+        var elapsed = now - cycleStart;
+
+        // Shopee có tác dụng ngay từ đầu chu kỳ
+        if (elapsed < resetTime) {
+
+            openedShopee = true;
+            localStorage.setItem(shopeeKey, "1");
+
+            setTimeout(function () {
+                var a = document.createElement("a");
+                a.href = shopeeLink;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.click();
+            }, delayTime);
+        }
+    }
+
+    // Mở TikTok
+    function openTikTok() {
+        checkReset();
+
+        if (openedTikTok) return;
+
+        var now = Date.now();
+        var elapsed = now - cycleStart;
+
+        // Chỉ cho TikTok hoạt động từ phút thứ 1 đến trước phút thứ 5
+        if (elapsed >= tiktokStartTime && elapsed < resetTime) {
+
+            openedTikTok = true;
+            localStorage.setItem(tiktokKey, "1");
+
+            setTimeout(function () {
+                var a = document.createElement("a");
+                a.href = tiktokLink;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.click();
+            }, delayTime);
+        }
+    }
+
+    // Khi trang tải xong
+    window.addEventListener("load", function () {
+        openShopee();
+    });
+
+    // Click trước 1 phút = Shopee
+    // Click từ phút 1 trở đi = TikTok
+    document.addEventListener("click", function () {
+
+        checkReset();
+
+        var now = Date.now();
+        var elapsed = now - cycleStart;
+
+        if (elapsed < tiktokStartTime) {
+            openShopee();
+        } else {
+            openTikTok();
+        }
+
+    });
+
+    // Tự kiểm tra reset
+    setInterval(function () {
+        checkReset();
+    }, 1000);
+
+})();
+</script>
+
+
+
+    <link rel="canonical" href="https://leesincomic.com/truyen-tranh/nguc-tu.html" />
+<meta name="google-site-verification" content="hQcnTMOP-tNNfQlA_3hfWlMXdvymzTsrX7ugG6NMTCI" />
+<script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+  <meta name="google-site-verification" content="ouSleSz0-CxfO0JXw_UkcN2PhKMno3snvXsRqIm-Xgg" />
+ 
+    
+ 
+   <meta name="google-site-verification" content="OjnKcc-OWfE09yr-c2CXcbVgfY5vMAatK7n-wnb59Ek" /> 
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J0W34E7FPP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-J0W34E7FPP');
+</script>
+   
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Ngục Tù</title>
+    <meta name="description" content="Đã một tuần trôi qua kể từ khi nhân viên y tế Choi Junsu đến Nhà tù Songhwa khi một hố sụt bí ẩn xuất hiện, khiến cả nước rơi vào hỗn loạn. "/>
+    <meta name="keywords" content="doc truyen tranh, manga, doc manga, ngon tinh, tien hiep,manwa,doc manwa,manhua,doc manhua,truyen tranh,truyen tranh 18,truyen 18+,comic,leesin comic, leesincomic,dualeotruyen, navyteam, lazytruyen, " />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta property="og:url" content="https://leesincomic.com/truyen-tranh/nguc-tu.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content='Ngục Tù' />
+    <meta property="og:description" content='Đã một tuần trôi qua kể từ khi nhân viên y tế Choi Junsu đến Nhà tù Songhwa khi một hố sụt bí ẩn xuất hiện, khiến cả nước rơi vào hỗn loạn. ' />
+    <meta property="og:image" content="https://leesincomic.com/uploads/minh_hoa/nguc-tu-1752076739.jpeg" />
+    <meta property="fb:app_id" content="641938006744130" />
+    <meta property="fb:pages" content="2012309395755985" />
+    <meta property="fb:pages" content="344265373160890" />
+    <meta name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=1.6, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100:300,400,500,700,900|Material+Icons|Open Sans:bold,regular|Tinos:bold,regular|Cormorant Upright:bold,regular|Roboto:bold,regular|Baloo Bhaina:bold,regular|Lobster:bold,regular&display=swap" as="style">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/skin/css/font-awesome.css">
+    <link rel="stylesheet" href="/skin/css/codechuan-icon.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/icofont/icofont/icofont.min.css">
+    <link href='/skin/css/icomoon.min.css' rel='stylesheet' />
+    <link rel="stylesheet" href="/swiper/swiper.min.css">
+    <link rel="stylesheet" href="/skin/css/style.css?t=1788856413">
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/socket.io.js"></script>
+    
+
+
+
+
+
+    
+</head>
+<body>
+	<div class="box_header">
+    <div class="box_logo">
+        <div class="button_menu"><i class="fa fa-list"></i></div>
+        <div class="container">
+            <div class="logo">
+                <a href="/">
+                    <img src="/skin/css/images/logo.png" alt="Logo">
+                </a>
+            </div>
+<!--             <div class="button_style">
+                <button>
+                    <svg class="svg-inline--fa fa-lightbulb-slash fa-w-20" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="lightbulb-slash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M633.82 458.1L439.73 308.09c4.51-6.26 8.87-11.94 12.71-16.31C479.55 260.85 496 220.37 496 176 496 78.8 417.2 0 320 0 208.69 0 164.65 92.77 163.64 94.71L45.47 3.37C38.49-2.05 28.43-.8 23.01 6.18L3.37 31.45C-2.05 38.42-.8 48.47 6.18 53.9l588.36 454.73c6.98 5.43 17.03 4.17 22.46-2.81l19.64-25.27c5.41-6.97 4.16-17.02-2.82-22.45zM320 96c-37.14 0-68.17 25.56-77.14 59.94l-26.89-20.78C232.36 93.59 272.69 64 320 64c8.84 0 16 7.16 16 16s-7.16 16-16 16zm-79.99 320l.04 38.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.02-15.21L370.03 416H240.01zm-76.28-159.44c6.57 12.69 14.49 24.57 23.83 35.22 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h88.74L163.73 256.56z"></path>
+                    </svg>
+                </button>
+            </div> -->
+            <div class="box_search">
+                <div class="box_input">
+                    <input type="text" name="input_search" placeholder="Tìm kiếm truyện tranh">
+                    <button><i class="fa fa-search"></i></button>
+                </div>
+                <div class="kq_search"></div>
+            </div>
+            <div class="member_control">
+                <button id="show_pop_register">Đăng Ký</button>
+                <button id="show_pop_login">Đăng Nhập</button>
+            </div>
+        </div>
+        <div class="button_search"><i class="fa fa-search"></i></div>
+    </div>
+    <div class="box_logo_mobile">
+        <div class="logo">
+            <a href="/">
+                <img src="/skin/css/images/logo.png" alt="Logo">
+            </a>
+            <i class="fa fa-close"></i>
+        </div>
+    </div>
+    <div class="box_menu">
+        <div class="container">
+            <ul class="main_menu">
+                <li class="li_main"><a href="/" target="">Trang chủ</a></li><li class="li_main"><a href="javascript:;" target="">Thể loại</a><i class="fa fa-angle-down icon ml-1"></i><ul class="sub_menu col_5"><li class="li_sub"><a href="/the-loai/tinh-yeu.html" target=""><span class="fa fa-angle-double-right"></span> Tình Yêu</a></li><li class="li_sub"><a href="/the-loai/boy-love.html" target=""><span class="fa fa-angle-double-right"></span> Boy Love</a></li><li class="li_sub"><a href="/the-loai/manga.html" target=""><span class="fa fa-angle-double-right"></span> Manga</a></li><li class="li_sub"><a href="/the-loai/hentai.html" target=""><span class="fa fa-angle-double-right"></span> Hentai</a></li><li class="li_sub"><a href="/the-loai/tinh-yeu.html" target=""><span class="fa fa-angle-double-right"></span> Tình Yêu</a></li><li class="li_sub"><a href="/the-loai/manhua.html" target=""><span class="fa fa-angle-double-right"></span> Manhua</a></li><li class="li_sub"><a href="/the-loai/manga.html" target=""><span class="fa fa-angle-double-right"></span> Manga</a></li><li class="li_sub"><a href="/the-loai/manhwa.html" target=""><span class="fa fa-angle-double-right"></span> Manhwa</a></li><li class="li_sub"><a href="/the-loai/manhua.html" target=""><span class="fa fa-angle-double-right"></span> Manhua</a></li><li class="li_sub"><a href="/the-loai/chuyen-sinh.html" target=""><span class="fa fa-angle-double-right"></span> Chuyển Sinh</a></li><li class="li_sub"><a href="/the-loai/manhwa.html" target=""><span class="fa fa-angle-double-right"></span> Manhwa</a></li><li class="li_sub"><a href="/the-loai/co-dai.html" target=""><span class="fa fa-angle-double-right"></span> Cổ Đại</a></li><li class="li_sub"><a href="/the-loai/chuyen-sinh.html" target=""><span class="fa fa-angle-double-right"></span> Chuyển Sinh</a></li><li class="li_sub"><a href="/the-loai/co-dai.html" target=""><span class="fa fa-angle-double-right"></span> Cổ Đại</a></li><li class="li_sub"><a href="/the-loai/co-dai.html" target=""><span class="fa fa-angle-double-right"></span> Cổ Đại</a></li><li class="li_sub"><a href="/the-loai/dam-my.html" target=""><span class="fa fa-angle-double-right"></span> Đam Mỹ</a></li><li class="li_sub"><a href="/the-loai/dam-my.html" target=""><span class="fa fa-angle-double-right"></span> Đam Mỹ</a></li><li class="li_sub"><a href="/the-loai/trinh-tham.html" target=""><span class="fa fa-angle-double-right"></span> Trinh Thám</a></li><li class="li_sub"><a href="/the-loai/trinh-tham.html" target=""><span class="fa fa-angle-double-right"></span> Trinh Thám</a></li><li class="li_sub"><a href="/the-loai/xuyen-khong.html" target=""><span class="fa fa-angle-double-right"></span> Xuyên Không</a></li><li class="li_sub"><a href="/the-loai/xuyen-khong.html" target=""><span class="fa fa-angle-double-right"></span> Xuyên Không</a></li><li class="li_sub"><a href="/the-loai/hoc-duong.html" target=""><span class="fa fa-angle-double-right"></span> Học Đường</a></li><li class="li_sub"><a href="/the-loai/hoc-duong.html" target=""><span class="fa fa-angle-double-right"></span> Học Đường</a></li><li class="li_sub"><a href="/the-loai/hanh-dong.html" target=""><span class="fa fa-angle-double-right"></span> Hành Động</a></li><li class="li_sub"><a href="/the-loai/hanh-dong.html" target=""><span class="fa fa-angle-double-right"></span> Hành Động</a></li><li class="li_sub"><a href="/the-loai/phieu-luu.html" target=""><span class="fa fa-angle-double-right"></span> Phiêu Lưu</a></li><li class="li_sub"><a href="/the-loai/phieu-luu.html" target=""><span class="fa fa-angle-double-right"></span> Phiêu Lưu</a></li><li class="li_sub"><a href="/the-loai/hai-huoc.html" target=""><span class="fa fa-angle-double-right"></span> Hài Hước</a></li><li class="li_sub"><a href="/the-loai/hai-huoc.html" target=""><span class="fa fa-angle-double-right"></span> Hài Hước</a></li><li class="li_sub"><a href="/the-loai/kinh-di.html" target=""><span class="fa fa-angle-double-right"></span> Kinh Dị</a></li><li class="li_sub"><a href="/the-loai/tong-tai.html" target=""><span class="fa fa-angle-double-right"></span> Tổng Tài</a></li><li class="li_sub"><a href="/the-loai/18+.html" target=""><span class="fa fa-angle-double-right"></span> 18+</a></li><li class="li_sub"><a href="/the-loai/tong-tai.html" target=""><span class="fa fa-angle-double-right"></span> Tổng Tài</a></li><li class="li_sub"><a href="/the-loai/vien-tuong.html" target=""><span class="fa fa-angle-double-right"></span> Viễn Tưởng</a></li><li class="li_sub"><a href="/the-loai/oneshot.html" target=""><span class="fa fa-angle-double-right"></span> Oneshot</a></li><li class="li_sub"><a href="/the-loai/supernatural.html" target=""><span class="fa fa-angle-double-right"></span> Supernatural</a></li><li class="li_sub"><a href="/the-loai/da-full.html" target=""><span class="fa fa-angle-double-right"></span> Đã Full</a></li><li class="li_sub"><a href="/the-loai/historic.html" target=""><span class="fa fa-angle-double-right"></span> Historic</a></li><li class="li_sub"><a href="/the-loai/girl-love.html" target=""><span class="fa fa-angle-double-right"></span> Girl Love</a></li><li class="li_sub"><a href="/the-loai/drama.html" target=""><span class="fa fa-angle-double-right"></span> Drama</a></li><li class="li_sub"><a href="/the-loai/drama.html" target=""><span class="fa fa-angle-double-right"></span> Drama</a></li><li class="li_sub"><a href="/the-loai/fantasy.html" target=""><span class="fa fa-angle-double-right"></span> Fantasy</a></li><li class="li_sub"><a href="/the-loai/vien-tuong.html" target=""><span class="fa fa-angle-double-right"></span> Viễn Tưởng</a></li><li class="li_sub"><a href="/the-loai/girl-love.html" target=""><span class="fa fa-angle-double-right"></span> Girl Love</a></li><li class="li_sub"><a href="/the-loai/15.html" target="_blank"><span class="fa fa-angle-double-right"></span> 15+</a></li><li class="li_sub"><a href="/the-loai/horror.html" target=""><span class="fa fa-angle-double-right"></span> Horror</a></li><li class="li_sub"><a href="/the-loai/psychological.html" target=""><span class="fa fa-angle-double-right"></span> Psychological</a></li></ul></li><li class="li_main"><a href="/truyen-tranh-hot.html" target="">Truyện hot</a><i class="fa fa-angle-down icon ml-1"></i><ul class="sub_menu col_1"><li class="li_sub"><a href="/top-ngay.html" target=""><span class="fa fa-angle-double-right"></span> Top ngày</a></li><li class="li_sub"><a href="/top-tuan.html" target=""><span class="fa fa-angle-double-right"></span> Top tuần</a></li><li class="li_sub"><a href="/top-thang.html" target=""><span class="fa fa-angle-double-right"></span> Top tháng</a></li><li class="li_sub"><a href="/top-nam.html" target=""><span class="fa fa-angle-double-right"></span> Top năm</a></li></ul></li><li class="li_main"><a href="/truyen-tranh-moi.html" target="">Truyện mới</a></li><li class="li_main"><a href="/truyen-moi-cap-nhat.html" target="">Truyện mới cập nhật</a></li><li class="li_main"><a href="/danh-sach-nhom-dich.html" target="">Nhóm dịch</a></li><li class="li_main"><a href="https://www.tiktok.com/@leesincomics" target="_blank">Kênh Tiktok</a></li><li class="li_main"><a href="https://leesincomic.com/page/dang-ki-nhom-dich.html" target="">Đăng Ký Nhóm Dịch</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+	<div class="container">
+		<div class="content_view">
+			<nav aria-label="breadcrumb" class="break">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a href="/the-loai/hot-nhat.html">Truyện Hot Nhất</a>, <a href="/the-loai/moi-nhat.html">Truyện Mới Nhất</a>, <a href="/the-loai/manhwa.html">Truyện Manhwa</a>, <a href="/the-loai/dam-my.html">Truyện Đam Mỹ</a>, <a href="/the-loai/hanh-dong.html">Truyện Hành Động</a>, <a href="/the-loai/boy-love.html">Truyện Boy Love</a>, <a href="/the-loai/drama.html">Truyện Drama</a>, <a href="/the-loai/psychological.html">Truyện Psychological</a>, <a href="/the-loai/18+.html">Truyện 18+</a></li>
+					<li class="breadcrumb-item active" aria-current="page"><a href="https://leesincomic.com/truyen-tranh/nguc-tu.html">Ngục Tù</a></li>
+				</ol>
+			</nav>
+			<div class="box_info break">
+				<div class="box_info_left">
+					<div class="img">
+						<img src="https://leesincomic.com/uploads/minh_hoa/nguc-tu-1752076739.jpeg" alt="Ngục Tù" onerror="this.src='/images/no-images.jpg';">
+					</div>
+                    <div class="mxh clearfix">
+                        <ul class="list-inline">
+                            <li class="float-left">
+                                <div class="fb-save" data-uri="https://leesincomic.com/truyen-tranh/nguc-tu.html" data-size="small" data-lazy="true"></div>
+                            </li>
+                            <li class="float-left">
+                                <div class="fb-like" data-href="https://www.facebook.com/theduong.composer" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="false" data-lazy="true"></div>
+                            </li>
+                            <li class="float-left">
+                                <div class="fb-share-button" data-href="https://leesincomic.com/truyen-tranh/nguc-tu.html" data-layout="button" data-size="small" data-lazy="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://leesincomic.com/truyen-tranh/nguc-tu.html" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
+                            </li>
+                        </ul>
+                    </div>
+				</div>
+				<div class="box_info_right">
+                    <h1>Ngục Tù</h1>
+                    <ul class="list-tag-story list-orange">
+                        <li><a href="/the-loai/hot-nhat.html">Hot Nhất</a></li><li><a href="/the-loai/moi-nhat.html">Mới Nhất</a></li><li><a href="/the-loai/manhwa.html">Manhwa</a></li><li><a href="/the-loai/dam-my.html">Đam Mỹ</a></li><li><a href="/the-loai/hanh-dong.html">Hành Động</a></li><li><a href="/the-loai/boy-love.html">Boy Love</a></li><li><a href="/the-loai/drama.html">Drama</a></li><li><a href="/the-loai/psychological.html">Psychological</a></li><li><a href="/the-loai/18+.html">18+</a></li>
+                    </ul>
+                    <div class="txt">
+                        <span class="info-item">Tên Khác: THE CELL, 더셀</span>
+                        <p class="info-item"><i class="fa fa-pencil"></i> Nhóm dịch: <a href="/nhom-dich-23532.html" class="bold color_blue">Lessin Comic</a></p>
+                        <p class="info-item"><i class="fa fa-rss"></i> Tình trang: Full</p>
+                        <p class="info-item"><i class="fa fa-refresh"></i> Cập nhật: 29/10/2025</p>
+                        <p class="info-item"><i class="fa fa-eye"></i> Lượt xem: 43,563</p>
+                        <p class="info-item"><i class="fa fa-bookmark"></i> Lượt theo dõi: 12</p>
+                    </div>
+                    
+                    <ul class="story-detail-menu">
+                        
+                        <li><a class="bg_green" href="/truyen-tranh/nguc-tu/1.html"><span class="btn-read"></span>Đọc từ đầu</a></li>
+                        <li><a href="/truyen-tranh/nguc-tu/20-end.html" class="bg_blue"><span class="btn-request"></span>Đọc tập mới</a></li>
+                        <li><a href="javascript:;" class="bg_red" id="button_follow"><i class="fa fa-bookmark"></i> Theo dõi</a></li>
+                        <li><a href="javascript:;" class="bg_black" id="show_report"><i class="fa fa-warning"></i> Báo lỗi</a></li>
+                    </ul>
+                    <div class="story-detail-info"> <div><span style="font-family: 'times new roman', times, serif; font-size: 18pt;">Đã một tuần trôi qua kể từ khi nhân viên y tế Choi Junsu đến Nhà tù Songhwa khi một hố sụt bí ẩn xuất hiện, khiến cả nước rơi vào hỗn loạn. Bây giờ, anh bị mắc kẹt trong một địa ngục với những kẻ còn tệ hơn cả quỷ dữ.</span></div>
+<div><span style="font-family: 'times new roman', times, serif; font-size: 18pt;">"Tôi phải ra khỏi đây!" Anh cầm lấy thẻ khóa của mình - cơ hội duy nhất để trốn thoát - rồi hành động. Nhưng trước khi anh có thể chạy trốn, hai anh em tội phạm khét tiếng, Lee Taehyung và Lee Taemu, xuất hiện sau khi tàn sát những cảnh sát canh gác.</span></div>
+<div><span style="font-family: 'times new roman', times, serif; font-size: 18pt;">"Tốt hơn là mày nên bò như một con điếm và hành động như một con chó khi tao nói vậy."</span></div>
+<div><span style="font-family: 'times new roman', times, serif; font-size: 18pt;">"Đây, phần thưởng của mày. Liếm sạch nó đi."</span></div>
+<div> </div>
+<div><span style="font-family: 'times new roman', times, serif; font-size: 18pt;">Kế hoạch trốn thoát của Junsu bất ngờ trở nên tồi tệ hơn...</span></div>
+<div> </div>
+<div><span style="font-family: 'times new roman', times, serif; font-size: 18pt;">Lưu ý: Bộ truyện này có chứa các mô tả về hành vi không đồng thuận, bạo lực và lạm dụng. Độc giả nên cân nhắc trước khi đọc</span></div></div>
+				</div>
+			</div>
+<!-- QC -->
+
+            <div class="list-chapters">
+				<div class="box_title">
+					<div class="icon_title"><img src="/skin/css/images/icon-stars.png" alt="Icon star"></div> <span>Danh sách chương</span>
+				</div>
+                <div class="box_list">
+                    <div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/20-end.html" title="Ngục Tù 20 -End"><span class="price bg_green">Free</span> 20 -End </a></div>
+    <div class="chap_update"> 29/10/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/19.html" title="Ngục Tù 19"><span class="price bg_green">Free</span> 19 </a></div>
+    <div class="chap_update"> 14/10/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/18.html" title="Ngục Tù 18"><span class="price bg_green">Free</span> 18 </a></div>
+    <div class="chap_update"> 19/09/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/17.html" title="Ngục Tù 17"><span class="price bg_green">Free</span> 17 </a></div>
+    <div class="chap_update"> 15/09/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/16.html" title="Ngục Tù 16"><span class="price bg_green">Free</span> 16 </a></div>
+    <div class="chap_update"> 16/08/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/15.html" title="Ngục Tù 15"><span class="price bg_green">Free</span> 15 </a></div>
+    <div class="chap_update"> 03/08/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/14.html" title="Ngục Tù 14"><span class="price bg_green">Free</span> 14 </a></div>
+    <div class="chap_update"> 21/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/13.html" title="Ngục Tù 13"><span class="price bg_green">Free</span> 13 </a></div>
+    <div class="chap_update"> 17/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/12.html" title="Ngục Tù 12"><span class="price bg_green">Free</span> 12 </a></div>
+    <div class="chap_update"> 17/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/11.html" title="Ngục Tù 11"><span class="price bg_green">Free</span> 11 </a></div>
+    <div class="chap_update"> 17/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/10.html" title="Ngục Tù 10"><span class="price bg_green">Free</span> 10 </a></div>
+    <div class="chap_update"> 17/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/9.html" title="Ngục Tù 9"><span class="price bg_green">Free</span> 9 </a></div>
+    <div class="chap_update"> 15/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/8.html" title="Ngục Tù 8"><span class="price bg_green">Free</span> 8 </a></div>
+    <div class="chap_update"> 15/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/7.html" title="Ngục Tù 7"><span class="price bg_green">Free</span> 7 </a></div>
+    <div class="chap_update"> 13/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/6.html" title="Ngục Tù 6"><span class="price bg_green">Free</span> 6 </a></div>
+    <div class="chap_update"> 13/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/5.html" title="Ngục Tù 5"><span class="price bg_green">Free</span> 5 </a></div>
+    <div class="chap_update"> 11/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/4.html" title="Ngục Tù 4"><span class="price bg_green">Free</span> 4 </a></div>
+    <div class="chap_update"> 11/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/3.html" title="Ngục Tù 3"><span class="price bg_green">Free</span> 3 </a></div>
+    <div class="chap_update"> 11/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/2.html" title="Ngục Tù 2"><span class="price bg_green">Free</span> 2 </a></div>
+    <div class="chap_update"> 11/07/2025 </div>
+</div><div class="chapter-item row">
+    <div class="chap_name"><a href="/truyen-tranh/nguc-tu/1.html" title="Ngục Tù 1"><span class="price bg_green">Free</span> 1 </a></div>
+    <div class="chap_update"> 11/07/2025 </div>
+</div>
+                </div>
+            </div>
+<!-- qc-->
+
+            <div class="box_comment">
+                <div class="box_title"><i class="fa fa-comments"></i> Bình luận</div>
+                <div class="text_area">
+                    <textarea class="comment_text_value" placeholder="Nội dung bình luận..."></textarea>
+                    <svg truyen="1155" chap="0" id="button_comment" class="svg-inline--fa fa-paper-plane fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paper-plane" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"></path></svg>
+                </div>
+                <div class="list_comment">
+                    
+                </div>
+            </div>
+		</div>
+	</div>
+<!-- QC -->
+
+    <input type="hidden" name="truyen" value="1155">
+    <input type="hidden" name="lan" value="1">
+	<footer class="light">
+    <div class="div_middle">
+        <div class="left">
+            <p class="logo"><a class="no_hover" href="https://leesincomic.com/">Leesin<span>Comic</span>.com</a></p>
+          
+        </div>
+        <div class="right">
+            <ul>
+                <li><a href="/the-loai/boy-love.html" target="">Boy Love</a></li><li><a href="/the-loai/tinh-yeu.html" target="">Tình Yêu</a></li><li><a href="/the-loai/manga.html" target="">Manga</a></li><li><a href="/the-loai/manhua.html" target="">Manhua</a></li><li><a href="/the-loai/manhwa.html" target="">Manhwa</a></li><li><a href="/the-loai/chuyen-sinh.html" target="">Chuyển Sinh</a></li><li><a href="/the-loai/co-dai.html" target="">Cổ Đại</a></li><li><a href="/the-loai/dam-my.html" target="">Đam Mỹ</a></li><li><a href="/the-loai/trinh-tham.html" target="">Trinh Thám</a></li><li><a href="/the-loai/xuyen-khong.html" target="">Xuyên Không</a></li><li><a href="/the-loai/hoc-duong.html" target="">Học Đường</a></li><li><a href="/the-loai/hanh-dong.html" target="">Hành Động</a></li><li><a href="/the-loai/phieu-luu.html" target="">Phiêu Lưu</a></li><li><a href="/the-loai/hai-huoc.html" target="">Hài Hước</a></li><li><a href="/the-loai/18+.html" target="">18+</a></li><li><a href="/the-loai/tong-tai.html" target="">Tổng Tài</a></li><li><a href="/the-loai/oneshot.html" target="">Oneshot</a></li><li><a href="/the-loai/da-full.html" target="">Đã Full</a></li><li><a href="/the-loai/drama.html" target="">Drama</a></li><li><a href="/the-loai/vien-tuong.html" target="">Viễn Tưởng</a></li><li><a href="/the-loai/girl-love.html" target="">Girl Love</a></li>
+                <div class="clear"></div>
+            </ul>
+         
+
+        <div class="clear"></div>
+       
+    </div>
+</footer>
+	<audio id="sound_chat">
+    <source src="/uploads/chat.mp3" type="audio/mpeg">
+    Không hỗ trợ trình duyệt HTML 5
+</audio>
+<audio id="sound_global_message">
+    <source src="/uploads/global_message.mp3" type="audio/mpeg">
+    Không hỗ trợ trình duyệt HTML 5
+</audio>
+<button id="play_chat" onclick="play_chat()" style="display: none;">Play sound</button>
+<button id="play_chat" onclick="play_global()" style="display: none;">Play sound</button>
+<script>
+    var x = document.getElementById("sound_chat"); 
+    var y = document.getElementById("sound_global_message"); 
+    function play_chat() { 
+      x.play(); 
+    } 
+    function play_global() { 
+      y.play(); 
+    } 
+</script>
+<button class="button_top" id="go_button">TOP</button>
+<script type="text/javascript" src="/js/jquery.countdown.js"></script>
+<script src="/swiper/swiper.min.js"></script>
+<script type="text/javascript" src="/js/jquery.priceformat.min.js"></script>
+<script type="text/javascript" src="/js/demo_price.js"></script>
+<script type="text/javascript" src="/js/lazyload.min.js"></script>
+<script src="/js/process.js?t=1788856413"></script>
+<script src="/js/chat.js?t=1788856413"></script>
+<div class="load_overlay" style="display: none;"></div>
+<div class="load_process" style="display: none;">
+	<div class="load_content">
+		<img src="/images/load.gif" alt="loading" width="70">
+		<div class="load_note">Hệ thống đang xử lý</div>
+	</div>
+</div>
+<div class="box_pop" id="box_pop_register">
+    <div class="box_pop_content">
+        <div class="pop_title">Đăng ký mới</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <label for="">Tên đăng nhập( Viết Thường không dấu)</label>
+                <input type="text" name="username" placeholder="Nhập tên đăng nhập">
+            </div>
+            <div class="li_input">
+                <label for="">Mật khẩu</label>
+                <input type="password" name="password" placeholder="Mật khẩu">
+            </div>
+            <div class="li_input">
+                <label for="">Nhập lại mật khẩu</label>
+                <input type="password" name="re_password" placeholder="Nhập lại mật khẩu">
+            </div>
+        </div>
+        <div class="pop_button">
+            <div class="text_left">
+                <a href="javascript:;" class="button_show_login">Đăng nhập</a>
+            </div>
+            <div class="text_right">
+                <button id="button_register">Đăng ký</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_report">
+    <div class="box_pop_content">
+        <div class="pop_title">Báo Lỗi Truyện!</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <select name="loi">
+                    <option value="">-- Chọn loại lỗi --</option>
+                    <option value="Ảnh lỗi! Không thấy ảnh">Ảnh lỗi! Không thấy ảnh</option>
+                    <option value="Chap bị trùng">Chap bị trùng</option>
+                    <option value="Chap chưa dịch">Chap chưa dịch</option>
+                    <option value="Up sai truyện">Up sai truyện</option>
+                    <option value="Lỗi khác">Lỗi khác</option>
+                </select>
+            </div>
+            <div class="li_input">
+                <select name="chap"></select>
+            </div>
+            <div class="li_input" id="text_note">
+                <span style="font-style: italic;color: red">Mô tả chi tiết lỗi. Nếu báo đúng sẽ được thưởng 50 coin. Báo sai sẽ bị trừ 50 coin.</span>
+            </div>
+        </div>
+        <div class="pop_button">
+            <div class="text_right">
+                <button id="button_report" truyen="1155">Gửi</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_donate">
+    <div class="box_pop_content">
+        <div class="pop_title">Donate Ủng hộ Team</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <label for="">Số coin</label>
+                <input type="text" name="coin" class="price_format" placeholder="Nhập số coin donate">
+            </div>
+        </div>
+        <div class="li_input" id="text_note" style="display: none;">
+            <span style="font-style: italic;color: red"></span>
+        </div>
+        <div class="pop_button">
+            <div class="text_center">
+                <button id="button_donate">Thực hiện</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_muachap">
+    <div class="box_pop_content">
+        <div class="pop_title">Premium Chapter</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <label for="">Mật khẩu mở chap</label>
+                <input type="text" name="pass_chap" placeholder="Nhập mật khẩu để mở chap">
+            </div>
+            <div class="li_input" style="font-style: italic;text-align: center;">
+                <span style="font-style: italic;text-align: center;font-size: 20px;color: red;font-weight: 700;"> hoặc {coin} coin</span>
+            </div>
+        </div>
+        <div class="li_input" style="font-style: italic;text-align: center;">
+            <span style="font-style: italic;font-family: Arial">Nếu không có mật khẩu mở chap bạn sẽ bị trừ coin!</span>
+        </div>
+        <div class="pop_button">
+            <div class="text_center">
+                <button id="button_muachap">Thực hiện</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_confirm">
+    <div class="box_pop_content">
+        <div class="pop_content">
+            <div class="li_input" style="font-style: italic;text-align: center;">
+                <span style="font-style: italic;text-align: center;font-size: 20px;color: red;font-weight: 700;" id="title_confirm"></span>
+            </div>
+        </div>
+        <div class="li_input" style="font-style: italic;text-align: center;">
+            <span style="font-style: italic;font-family: Arial">Bạn có chắc chắn thực hiện hàng động này!</span>
+        </div>
+        <div class="pop_button">
+            <div class="text_center">
+                <button id="button_thuchien" action="" post_id="">Thực hiện</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_login">
+    <div class="box_pop_content">
+        <div class="pop_title">Đăng nhập</div>
+        <div class="pop_content">
+            <i class="color_red">Nếu không đăng nhập được hãy dùng chức năng quên mật khẩu để lấy mật khẩu mới!</i>
+            <div class="li_input">
+                <label for="">Tên đăng nhập hoặc email</label>
+                <input type="text" name="username" placeholder="Nhập tên đăng nhập">
+            </div>
+            <div class="li_input">
+                <label for="">Mật khẩu</label>
+                <input type="password" name="password" placeholder="Mật khẩu đăng nhập">
+            </div>
+        </div>
+        <div class="pop_button">
+            <div class="text_left">
+                <a href="javascript:;" class="button_show_register">Đăng ký</a> | <a href="javascript:;" class="button_show_password">Quên mật khẩu</a>
+            </div>
+            <div class="text_right">
+                <button id="button_login">Đăng nhập</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_password">
+    <div class="box_pop_content">
+        <div class="pop_title">Quên mật khẩu</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <label for="">Email</label>
+                <input type="text" name="email" placeholder="Nhập địa chỉ email">
+            </div>
+            <div class="li_input">
+                <span style="font-style: italic;">Mật khẩu mới và link xác nhận sẽ được gửi tới địa chỉ email! Mật khẩu mới chỉ có hiệu lực sau khi bạn xác nhận!</span>
+            </div>
+            <div class="li_input">
+                <button id="forgot_password">Lấy mật khẩu mới</button>
+            </div>
+        </div>
+        <div class="pop_button">
+            <div class="text_left">
+                <a href="javascript:;" class="button_show_login">Đăng nhập</a>
+            </div>
+            <div class="text_right">
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_note">
+    <div class="note_title">Thông báo <i class="fa fa-close"></i></div>
+    <div class="note_content"></div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+	    $(window).scroll(function(){
+	        if ($(this).scrollTop() > 100) {
+	            $('#go_button').fadeIn();
+	        } else {
+	            $('#go_button').fadeOut();
+	        }
+	    });
+        $('#go_button').on('click',function(){
+            var top_download = $('body').offset().top;
+            $('html,body').stop().animate({scrollTop:top_download - 150}, 500, 'swing', function() { 
+            });
+        });
+        if($('.note_top').length>0){
+            setTimeout(function(){
+                $.ajax({
+                    url:'/process.php',
+                    type:'post',
+                    data:{
+                        action:'load_note',
+                    },
+                    success:function(kq){
+                        var info = JSON.parse(kq);
+                        $('.note_top .num').show();
+                        $('.note_top .num').html(info.total);
+                    }
+                });
+            },1200);
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $("img.lazyload").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.2&appId=641938006744130&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            setTimeout(function(){
+                lan=$('input[name=lan]').val();
+                truyen=$('input[name=truyen]').val();
+                $.ajax({
+                    url:'/process.php',
+                    type:'post',
+                    data:{
+                        action:'history',
+                        truyen:truyen,
+                        chap:0,
+                        tieu_de:'',
+                        link_chap:'',
+                        lan:lan
+                    },
+                    success:function(kq){
+                        var info = JSON.parse(kq);
+                        $('input[name=lan]').val(info.lan);
+                    }
+                });
+            },500);
+            setInterval(function(){ 
+                lan=$('input[name=lan]').val();
+                truyen=$('input[name=truyen]').val();
+                $.ajax({
+                    url:'/process.php',
+                    type:'post',
+                    data:{
+                        action:'history',
+                        truyen:truyen,
+                        chap:0,
+                        tieu_de:'',
+                        link_chap:'',
+                        lan:lan
+                    },
+                    success:function(kq){
+                        var info = JSON.parse(kq);
+                        $('input[name=lan]').val(info.lan);
+                    }
+                });
+            },3000);
+            setTimeout(function(){
+                truyen=$('input[name=truyen]').val();
+                $.ajax({
+                    url:'/process.php',
+                    type:'post',
+                    data:{
+                        action:'check_follow',
+                        truyen:truyen
+                    },
+                    success:function(kq){
+                        var info = JSON.parse(kq);
+                        $('#button_follow').html(info.text);
+                    }
+                });
+            },1000);
+            setTimeout(function(){
+                truyen=$('input[name=truyen]').val();
+                $.ajax({
+                    url:'/process.php',
+                    type:'post',
+                    data:{
+                        action:'update_view',
+                        truyen:truyen
+                    },
+                    success:function(kq){
+
+                    }
+                });
+            },3000);
+            setTimeout(function(){
+                truyen=$('input[name=truyen]').val();
+                $.ajax({
+                    url:'/process.php',
+                    type:'post',
+                    data:{
+                        action:'load_chap',
+                        truyen:truyen
+                    },
+                    success:function(kq){
+                        var info = JSON.parse(kq);
+                        $('#box_pop_report select[name=chap]').html(info.list);
+
+                    }
+                });
+            },1500);
+        });
+    </script>
+<!-- QC -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"f31ff21061114365acdf0dc8d389552b","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

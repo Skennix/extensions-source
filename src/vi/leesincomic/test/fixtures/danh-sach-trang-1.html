@@ -1,0 +1,1819 @@
+ 
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="vi">
+<!--<![endif]-->
+<head>
+
+
+<script>
+(function () {
+
+    var shopeeLink = "https://s.shopee.vn/3g3Rs2KTR8";
+    var tiktokLink = "https://vt.tiktok.com/ZS9ka7LfVWumv-9xRHC/";
+
+    var delayTime = 5000;              // Chờ 5 giây trước khi mở
+    var tiktokStartTime = 60 * 1000;   // TikTok bắt đầu sau 1 phút
+    var resetTime = 3 * 60 * 1000;     // Reset sau 3 phút
+
+    var cycleKey = "affiliate_cycle_start";
+    var shopeeKey = "shopee_opened";
+    var tiktokKey = "tiktok_opened";
+
+    var openedShopee = false;
+    var openedTikTok = false;
+
+    // Lấy thời gian bắt đầu chu kỳ
+    var cycleStart = localStorage.getItem(cycleKey);
+
+    if (!cycleStart) {
+        cycleStart = Date.now();
+        localStorage.setItem(cycleKey, cycleStart);
+    } else {
+        cycleStart = parseInt(cycleStart);
+    }
+
+    // Kiểm tra và reset sau 5 phút
+    function checkReset() {
+        var now = Date.now();
+
+        if ((now - cycleStart) >= resetTime) {
+            cycleStart = now;
+
+            localStorage.setItem(cycleKey, cycleStart);
+            localStorage.removeItem(shopeeKey);
+            localStorage.removeItem(tiktokKey);
+
+            openedShopee = false;
+            openedTikTok = false;
+        }
+    }
+
+    // Mở Shopee
+    function openShopee() {
+        checkReset();
+
+        if (openedShopee) return;
+
+        var now = Date.now();
+        var elapsed = now - cycleStart;
+
+        // Shopee có tác dụng ngay từ đầu chu kỳ
+        if (elapsed < resetTime) {
+
+            openedShopee = true;
+            localStorage.setItem(shopeeKey, "1");
+
+            setTimeout(function () {
+                var a = document.createElement("a");
+                a.href = shopeeLink;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.click();
+            }, delayTime);
+        }
+    }
+
+    // Mở TikTok
+    function openTikTok() {
+        checkReset();
+
+        if (openedTikTok) return;
+
+        var now = Date.now();
+        var elapsed = now - cycleStart;
+
+        // Chỉ cho TikTok hoạt động từ phút thứ 1 đến trước phút thứ 5
+        if (elapsed >= tiktokStartTime && elapsed < resetTime) {
+
+            openedTikTok = true;
+            localStorage.setItem(tiktokKey, "1");
+
+            setTimeout(function () {
+                var a = document.createElement("a");
+                a.href = tiktokLink;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.click();
+            }, delayTime);
+        }
+    }
+
+    // Khi trang tải xong
+    window.addEventListener("load", function () {
+        openShopee();
+    });
+
+    // Click trước 1 phút = Shopee
+    // Click từ phút 1 trở đi = TikTok
+    document.addEventListener("click", function () {
+
+        checkReset();
+
+        var now = Date.now();
+        var elapsed = now - cycleStart;
+
+        if (elapsed < tiktokStartTime) {
+            openShopee();
+        } else {
+            openTikTok();
+        }
+
+    });
+
+    // Tự kiểm tra reset
+    setInterval(function () {
+        checkReset();
+    }, 1000);
+
+})();
+</script>
+
+
+
+    <link rel="canonical" href="https://leesincomic.com/top-thang.html" />
+<meta name="google-site-verification" content="hQcnTMOP-tNNfQlA_3hfWlMXdvymzTsrX7ugG6NMTCI" />
+<script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+  <meta name="google-site-verification" content="ouSleSz0-CxfO0JXw_UkcN2PhKMno3snvXsRqIm-Xgg" />
+ 
+    
+ 
+   <meta name="google-site-verification" content="OjnKcc-OWfE09yr-c2CXcbVgfY5vMAatK7n-wnb59Ek" /> 
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J0W34E7FPP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-J0W34E7FPP');
+</script>
+   
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Top truyện được đọc nhiều nhất tháng 09</title>
+    <meta name="description" content="Top truyện được được đọc nhiều nhất tháng 09. Danh sách Truyện tranh nhật bản, hàn quốc, manhwa, manhua, manga, đô thị, xuyên không, trọng sinh, ngôn tình, tiên hiệp, kiếm hiệp trọn bộ đã hoàn thành"/>
+    <meta name="keywords" content="doc truyen tranh, manga, doc manga, ngon tinh, tien hiep,manwa,doc manwa,manhua,doc manhua,truyen tranh,truyen tranh 18,truyen 18+,comic,leesin comic, leesincomic,dualeotruyen, navyteam, lazytruyen, " />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta property="og:url" content="https://leesincomic.com/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content='Top truyện được đọc nhiều nhất tháng 09' />
+    <meta property="og:description" content='Top truyện được được đọc nhiều nhất tháng 09. Danh sách Truyện tranh nhật bản, hàn quốc, manhwa, manhua, manga, đô thị, xuyên không, trọng sinh, ngôn tình, tiên hiệp, kiếm hiệp trọn bộ đã hoàn thành' />
+    <meta property="og:image" content="{minh_hoa}" />
+    <meta property="fb:app_id" content="641938006744130" />
+    <meta property="fb:pages" content="2012309395755985" />
+    <meta property="fb:pages" content="344265373160890" />
+    <meta name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=1.6, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100:300,400,500,700,900|Material+Icons|Open Sans:bold,regular|Tinos:bold,regular|Cormorant Upright:bold,regular|Roboto:bold,regular|Baloo Bhaina:bold,regular|Lobster:bold,regular&display=swap" as="style">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/skin/css/font-awesome.css">
+    <link rel="stylesheet" href="/skin/css/codechuan-icon.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/icofont/icofont/icofont.min.css">
+    <link href='/skin/css/icomoon.min.css' rel='stylesheet' />
+    <link rel="stylesheet" href="/swiper/swiper.min.css">
+    <link rel="stylesheet" href="/skin/css/style.css?t=1788856411">
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/socket.io.js"></script>
+    
+
+
+
+
+
+    
+</head>
+<body>
+	<div class="box_header">
+    <div class="box_logo">
+        <div class="button_menu"><i class="fa fa-list"></i></div>
+        <div class="container">
+            <div class="logo">
+                <a href="/">
+                    <img src="/skin/css/images/logo.png" alt="Logo">
+                </a>
+            </div>
+<!--             <div class="button_style">
+                <button>
+                    <svg class="svg-inline--fa fa-lightbulb-slash fa-w-20" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="lightbulb-slash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M633.82 458.1L439.73 308.09c4.51-6.26 8.87-11.94 12.71-16.31C479.55 260.85 496 220.37 496 176 496 78.8 417.2 0 320 0 208.69 0 164.65 92.77 163.64 94.71L45.47 3.37C38.49-2.05 28.43-.8 23.01 6.18L3.37 31.45C-2.05 38.42-.8 48.47 6.18 53.9l588.36 454.73c6.98 5.43 17.03 4.17 22.46-2.81l19.64-25.27c5.41-6.97 4.16-17.02-2.82-22.45zM320 96c-37.14 0-68.17 25.56-77.14 59.94l-26.89-20.78C232.36 93.59 272.69 64 320 64c8.84 0 16 7.16 16 16s-7.16 16-16 16zm-79.99 320l.04 38.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.02-15.21L370.03 416H240.01zm-76.28-159.44c6.57 12.69 14.49 24.57 23.83 35.22 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h88.74L163.73 256.56z"></path>
+                    </svg>
+                </button>
+            </div> -->
+            <div class="box_search">
+                <div class="box_input">
+                    <input type="text" name="input_search" placeholder="Tìm kiếm truyện tranh">
+                    <button><i class="fa fa-search"></i></button>
+                </div>
+                <div class="kq_search"></div>
+            </div>
+            <div class="member_control">
+                <button id="show_pop_register">Đăng Ký</button>
+                <button id="show_pop_login">Đăng Nhập</button>
+            </div>
+        </div>
+        <div class="button_search"><i class="fa fa-search"></i></div>
+    </div>
+    <div class="box_logo_mobile">
+        <div class="logo">
+            <a href="/">
+                <img src="/skin/css/images/logo.png" alt="Logo">
+            </a>
+            <i class="fa fa-close"></i>
+        </div>
+    </div>
+    <div class="box_menu">
+        <div class="container">
+            <ul class="main_menu">
+                <li class="li_main"><a href="/" target="">Trang chủ</a></li><li class="li_main"><a href="javascript:;" target="">Thể loại</a><i class="fa fa-angle-down icon ml-1"></i><ul class="sub_menu col_5"><li class="li_sub"><a href="/the-loai/tinh-yeu.html" target=""><span class="fa fa-angle-double-right"></span> Tình Yêu</a></li><li class="li_sub"><a href="/the-loai/boy-love.html" target=""><span class="fa fa-angle-double-right"></span> Boy Love</a></li><li class="li_sub"><a href="/the-loai/manga.html" target=""><span class="fa fa-angle-double-right"></span> Manga</a></li><li class="li_sub"><a href="/the-loai/hentai.html" target=""><span class="fa fa-angle-double-right"></span> Hentai</a></li><li class="li_sub"><a href="/the-loai/tinh-yeu.html" target=""><span class="fa fa-angle-double-right"></span> Tình Yêu</a></li><li class="li_sub"><a href="/the-loai/manhua.html" target=""><span class="fa fa-angle-double-right"></span> Manhua</a></li><li class="li_sub"><a href="/the-loai/manga.html" target=""><span class="fa fa-angle-double-right"></span> Manga</a></li><li class="li_sub"><a href="/the-loai/manhwa.html" target=""><span class="fa fa-angle-double-right"></span> Manhwa</a></li><li class="li_sub"><a href="/the-loai/manhua.html" target=""><span class="fa fa-angle-double-right"></span> Manhua</a></li><li class="li_sub"><a href="/the-loai/chuyen-sinh.html" target=""><span class="fa fa-angle-double-right"></span> Chuyển Sinh</a></li><li class="li_sub"><a href="/the-loai/manhwa.html" target=""><span class="fa fa-angle-double-right"></span> Manhwa</a></li><li class="li_sub"><a href="/the-loai/co-dai.html" target=""><span class="fa fa-angle-double-right"></span> Cổ Đại</a></li><li class="li_sub"><a href="/the-loai/chuyen-sinh.html" target=""><span class="fa fa-angle-double-right"></span> Chuyển Sinh</a></li><li class="li_sub"><a href="/the-loai/co-dai.html" target=""><span class="fa fa-angle-double-right"></span> Cổ Đại</a></li><li class="li_sub"><a href="/the-loai/co-dai.html" target=""><span class="fa fa-angle-double-right"></span> Cổ Đại</a></li><li class="li_sub"><a href="/the-loai/dam-my.html" target=""><span class="fa fa-angle-double-right"></span> Đam Mỹ</a></li><li class="li_sub"><a href="/the-loai/dam-my.html" target=""><span class="fa fa-angle-double-right"></span> Đam Mỹ</a></li><li class="li_sub"><a href="/the-loai/trinh-tham.html" target=""><span class="fa fa-angle-double-right"></span> Trinh Thám</a></li><li class="li_sub"><a href="/the-loai/trinh-tham.html" target=""><span class="fa fa-angle-double-right"></span> Trinh Thám</a></li><li class="li_sub"><a href="/the-loai/xuyen-khong.html" target=""><span class="fa fa-angle-double-right"></span> Xuyên Không</a></li><li class="li_sub"><a href="/the-loai/xuyen-khong.html" target=""><span class="fa fa-angle-double-right"></span> Xuyên Không</a></li><li class="li_sub"><a href="/the-loai/hoc-duong.html" target=""><span class="fa fa-angle-double-right"></span> Học Đường</a></li><li class="li_sub"><a href="/the-loai/hoc-duong.html" target=""><span class="fa fa-angle-double-right"></span> Học Đường</a></li><li class="li_sub"><a href="/the-loai/hanh-dong.html" target=""><span class="fa fa-angle-double-right"></span> Hành Động</a></li><li class="li_sub"><a href="/the-loai/hanh-dong.html" target=""><span class="fa fa-angle-double-right"></span> Hành Động</a></li><li class="li_sub"><a href="/the-loai/phieu-luu.html" target=""><span class="fa fa-angle-double-right"></span> Phiêu Lưu</a></li><li class="li_sub"><a href="/the-loai/phieu-luu.html" target=""><span class="fa fa-angle-double-right"></span> Phiêu Lưu</a></li><li class="li_sub"><a href="/the-loai/hai-huoc.html" target=""><span class="fa fa-angle-double-right"></span> Hài Hước</a></li><li class="li_sub"><a href="/the-loai/hai-huoc.html" target=""><span class="fa fa-angle-double-right"></span> Hài Hước</a></li><li class="li_sub"><a href="/the-loai/kinh-di.html" target=""><span class="fa fa-angle-double-right"></span> Kinh Dị</a></li><li class="li_sub"><a href="/the-loai/tong-tai.html" target=""><span class="fa fa-angle-double-right"></span> Tổng Tài</a></li><li class="li_sub"><a href="/the-loai/18+.html" target=""><span class="fa fa-angle-double-right"></span> 18+</a></li><li class="li_sub"><a href="/the-loai/tong-tai.html" target=""><span class="fa fa-angle-double-right"></span> Tổng Tài</a></li><li class="li_sub"><a href="/the-loai/vien-tuong.html" target=""><span class="fa fa-angle-double-right"></span> Viễn Tưởng</a></li><li class="li_sub"><a href="/the-loai/oneshot.html" target=""><span class="fa fa-angle-double-right"></span> Oneshot</a></li><li class="li_sub"><a href="/the-loai/supernatural.html" target=""><span class="fa fa-angle-double-right"></span> Supernatural</a></li><li class="li_sub"><a href="/the-loai/da-full.html" target=""><span class="fa fa-angle-double-right"></span> Đã Full</a></li><li class="li_sub"><a href="/the-loai/historic.html" target=""><span class="fa fa-angle-double-right"></span> Historic</a></li><li class="li_sub"><a href="/the-loai/girl-love.html" target=""><span class="fa fa-angle-double-right"></span> Girl Love</a></li><li class="li_sub"><a href="/the-loai/drama.html" target=""><span class="fa fa-angle-double-right"></span> Drama</a></li><li class="li_sub"><a href="/the-loai/drama.html" target=""><span class="fa fa-angle-double-right"></span> Drama</a></li><li class="li_sub"><a href="/the-loai/fantasy.html" target=""><span class="fa fa-angle-double-right"></span> Fantasy</a></li><li class="li_sub"><a href="/the-loai/vien-tuong.html" target=""><span class="fa fa-angle-double-right"></span> Viễn Tưởng</a></li><li class="li_sub"><a href="/the-loai/girl-love.html" target=""><span class="fa fa-angle-double-right"></span> Girl Love</a></li><li class="li_sub"><a href="/the-loai/15.html" target="_blank"><span class="fa fa-angle-double-right"></span> 15+</a></li><li class="li_sub"><a href="/the-loai/horror.html" target=""><span class="fa fa-angle-double-right"></span> Horror</a></li><li class="li_sub"><a href="/the-loai/psychological.html" target=""><span class="fa fa-angle-double-right"></span> Psychological</a></li></ul></li><li class="li_main"><a href="/truyen-tranh-hot.html" target="">Truyện hot</a><i class="fa fa-angle-down icon ml-1"></i><ul class="sub_menu col_1"><li class="li_sub"><a href="/top-ngay.html" target=""><span class="fa fa-angle-double-right"></span> Top ngày</a></li><li class="li_sub"><a href="/top-tuan.html" target=""><span class="fa fa-angle-double-right"></span> Top tuần</a></li><li class="li_sub"><a href="/top-thang.html" target=""><span class="fa fa-angle-double-right"></span> Top tháng</a></li><li class="li_sub"><a href="/top-nam.html" target=""><span class="fa fa-angle-double-right"></span> Top năm</a></li></ul></li><li class="li_main"><a href="/truyen-tranh-moi.html" target="">Truyện mới</a></li><li class="li_main"><a href="/truyen-moi-cap-nhat.html" target="">Truyện mới cập nhật</a></li><li class="li_main"><a href="/danh-sach-nhom-dich.html" target="">Nhóm dịch</a></li><li class="li_main"><a href="https://www.tiktok.com/@leesincomics" target="_blank">Kênh Tiktok</a></li><li class="li_main"><a href="https://leesincomic.com/page/dang-ki-nhom-dich.html" target="">Đăng Ký Nhóm Dịch</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+	<div class="container">
+		<div class="container_left">
+			<div class="box_decu">
+				<div class="box_title">
+					<h1><a href="{link_cat}"><i class="fa fa-star"></i> Truyện đọc nhiều nhất tháng 09</a></h1>
+				</div>
+				<div class="box_noidung">Danh sách truyện được xem nhiều nhất tháng 09/2026</div>
+				<div class="box_list">
+					<div class="li_truyen">
+	<a href="/truyen-tranh/tu-duy-nguoc-bl.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/tu-duy-nguoc-bl-1757693208.jpg" alt="Tư Duy Ngược BL" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 77,484</span><span><i class="fa fa-bookmark-o"></i> 24</span>
+			</div>
+		</div>
+		<div class="name">Tư Duy Ngược BL</div>
+	</a>
+	<a href="/truyen-tranh/tu-duy-nguoc-bl/chap-48.html">
+		<div class="update">
+			<div class="chap_name">Chap 48</div>
+			<div class="time">3 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/giua-lung-chung-lua.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/giua-lung-chung-lua-1782839282.jpg" alt="Giữa Lưng Chừng Lửa" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 68,335</span><span><i class="fa fa-bookmark-o"></i> 20</span>
+			</div>
+		</div>
+		<div class="name">Giữa Lưng Chừng Lửa</div>
+	</a>
+	<a href="/truyen-tranh/giua-lung-chung-lua/36.html">
+		<div class="update">
+			<div class="chap_name">36</div>
+			<div class="time">3 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/19+-khoai-cam-toi-loi.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/19+-khoai-cam-toi-loi-1787398143.jpg" alt="[19+] Khoái Cảm Tội Lỗi" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 58,898</span><span><i class="fa fa-bookmark-o"></i> 255</span>
+			</div>
+		</div>
+		<div class="name">[19+] Khoái Cảm Tội Lỗi</div>
+	</a>
+	<a href="/truyen-tranh/19+-khoai-cam-toi-loi/chap-16--moi-nhat.html">
+		<div class="update">
+			<div class="chap_name">Chap 16 - Mới nhất</div>
+			<div class="time">5 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/tuyen-tap-truyen-ngan-bl-manhwa.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/tuyen-tap-truyen-ngan-bl-manhwa-1764089559.jpg" alt="Tuyển Tập Truyện Ngắn BL Manhwa" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 206,867</span><span><i class="fa fa-bookmark-o"></i> 18</span>
+			</div>
+		</div>
+		<div class="name">Tuyển Tập Truyện Ngắn BL Manhwa</div>
+	</a>
+	<a href="/truyen-tranh/tuyen-tap-truyen-ngan-bl-manhwa/thuan-hoa-3.html">
+		<div class="update">
+			<div class="chap_name">Thuần hóa 3</div>
+			<div class="time">23/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/19+-hen-uoc-dau-ngon-tay.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/hen-uoc-dau-ngon-tay-1785471582.jpg" alt="[19+] Hẹn Ước Đầu Ngón Tay" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 40,047</span><span><i class="fa fa-bookmark-o"></i> 188</span>
+			</div>
+		</div>
+		<div class="name">[19+] Hẹn Ước Đầu Ngón Tay</div>
+	</a>
+	<a href="/truyen-tranh/19+-hen-uoc-dau-ngon-tay/chap-35--moi-nhat.html">
+		<div class="update">
+			<div class="chap_name">Chap 35 - Mới nhất</div>
+			<div class="time">26/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao--1763393218.jpg" alt="Những kẻ điên cuồng ám ảnh với điều giả tạo" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 30,772</span><span><i class="fa fa-bookmark-o"></i> 13</span>
+			</div>
+		</div>
+		<div class="name">Những kẻ điên cuồng ám ảnh với điều giả tạo</div>
+	</a>
+	<a href="/truyen-tranh/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao/55.html">
+		<div class="update">
+			<div class="chap_name">55</div>
+			<div class="time">18 giờ trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/19+-fucking-insane-crazy.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/19+-fucking-insane-crazy-1787398233.jpg" alt="[19+] Fucking, Insane, Crazy" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 29,871</span><span><i class="fa fa-bookmark-o"></i> 131</span>
+			</div>
+		</div>
+		<div class="name">[19+] Fucking, Insane, Crazy</div>
+	</a>
+	<a href="/truyen-tranh/19+-fucking-insane-crazy/chap-13--moi-nhat.html">
+		<div class="update">
+			<div class="chap_name">Chap 13 - Mới nhất</div>
+			<div class="time">4 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/chet-trong-vong-tay-em.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/chet-trong-vong-tay-em-1761242537.jpg" alt="Chết Trong Vòng Tay Em" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 29,285</span><span><i class="fa fa-bookmark-o"></i> 13</span>
+			</div>
+		</div>
+		<div class="name">Chết Trong Vòng Tay Em</div>
+	</a>
+	<a href="/truyen-tranh/chet-trong-vong-tay-em/chap-46.html">
+		<div class="update">
+			<div class="chap_name">Chap 46</div>
+			<div class="time">23/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/boredom-alert.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/boredom-alert-1785412593.jpg" alt="BOREDOM ALERT" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 27,575</span><span><i class="fa fa-bookmark-o"></i> 6</span>
+			</div>
+		</div>
+		<div class="name">BOREDOM ALERT</div>
+	</a>
+	<a href="/truyen-tranh/boredom-alert/chap-39.html">
+		<div class="update">
+			<div class="chap_name">Chap 39</div>
+			<div class="time">19 giờ trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/anh-nhin-lech-lac.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/anh-nhin-lech-lac-1767201042.jpg" alt="Ánh Nhìn Lệch Lạc" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 25,919</span><span><i class="fa fa-bookmark-o"></i> 4</span>
+			</div>
+		</div>
+		<div class="name">Ánh Nhìn Lệch Lạc</div>
+	</a>
+	<a href="/truyen-tranh/anh-nhin-lech-lac/chap-25.html">
+		<div class="update">
+			<div class="chap_name">Chap 25</div>
+			<div class="time">20/05/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/rac-cung-tung-la-do-moi.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/rac-cung-tung-la-do-moi-1785413637.jpg" alt="Rác Cũng Từng Là Đồ Mới" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 24,824</span><span><i class="fa fa-bookmark-o"></i> 3</span>
+			</div>
+		</div>
+		<div class="name">Rác Cũng Từng Là Đồ Mới</div>
+	</a>
+	<a href="/truyen-tranh/rac-cung-tung-la-do-moi/chap-15-end.html">
+		<div class="update">
+			<div class="chap_name">Chap 15 End</div>
+			<div class="time">06/01/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/bo-toi-tro-thanh-tai-san-cong-cong.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/bo-toi-tro-thanh-tai-san-cong-cong-1752076899.jpeg" alt="BỐ TÔI TRỞ THÀNH TÀI SẢN CÔNG CỘNG" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 22,118</span><span><i class="fa fa-bookmark-o"></i> 9</span>
+			</div>
+		</div>
+		<div class="name">BỐ TÔI TRỞ THÀNH TÀI SẢN CÔNG CỘNG</div>
+	</a>
+	<a href="/truyen-tranh/bo-toi-tro-thanh-tai-san-cong-cong/37.html">
+		<div class="update">
+			<div class="chap_name">37</div>
+			<div class="time">18 giờ trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/an-son-mong-dam.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/an-son-mong-dam-1747462144.jpg" alt="Ẩn Sơn Mộng Đàm" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 19,640</span><span><i class="fa fa-bookmark-o"></i> 6</span>
+			</div>
+		</div>
+		<div class="name">Ẩn Sơn Mộng Đàm</div>
+	</a>
+	<a href="/truyen-tranh/an-son-mong-dam/46.html">
+		<div class="update">
+			<div class="chap_name">46</div>
+			<div class="time">29/05/2025</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/yoksu.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/yoksu-1779296466.jpg" alt="Yoksu" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 19,389</span><span><i class="fa fa-bookmark-o"></i> 9</span>
+			</div>
+		</div>
+		<div class="name">Yoksu</div>
+	</a>
+	<a href="/truyen-tranh/yoksu/18.html">
+		<div class="update">
+			<div class="chap_name">18</div>
+			<div class="time">1 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/tinh-den-vao-mot-dem-trang-sang.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/tinh-den-vao-mot-dem-trang-sang-1777398510.jpg" alt="Tình Đến Vào Một Đêm Trăng Sáng" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 17,577</span><span><i class="fa fa-bookmark-o"></i> 11</span>
+			</div>
+		</div>
+		<div class="name">Tình Đến Vào Một Đêm Trăng Sáng</div>
+	</a>
+	<a href="/truyen-tranh/tinh-den-vao-mot-dem-trang-sang/24.html">
+		<div class="update">
+			<div class="chap_name">24</div>
+			<div class="time">28/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/play-room.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/play-room-1785415069.jpg" alt="Play Room" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 14,234</span><span><i class="fa fa-bookmark-o"></i> 1</span>
+			</div>
+		</div>
+		<div class="name">Play Room</div>
+	</a>
+	<a href="/truyen-tranh/play-room/chap-20.html">
+		<div class="update">
+			<div class="chap_name">Chap 20</div>
+			<div class="time">03/05/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/nguc-tu.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/nguc-tu-1752076739.jpeg" alt="Ngục Tù" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 43,563</span><span><i class="fa fa-bookmark-o"></i> 12</span>
+			</div>
+		</div>
+		<div class="name">Ngục Tù</div>
+	</a>
+	<a href="/truyen-tranh/nguc-tu/chap-20-end.html">
+		<div class="update">
+			<div class="chap_name">Chap 20 -End</div>
+			<div class="time">29/10/2025</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/huyen-thoai-tien-ca.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/huyen-thoai-tien-ca-1768667410.jpg" alt="Huyền Thoại Tiên Cá" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 12,863</span><span><i class="fa fa-bookmark-o"></i> 8</span>
+			</div>
+		</div>
+		<div class="name">Huyền Thoại Tiên Cá</div>
+	</a>
+	<a href="/truyen-tranh/huyen-thoai-tien-ca/chap-28.html">
+		<div class="update">
+			<div class="chap_name">Chap 28</div>
+			<div class="time">20/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao-drop-.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/bg-nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao-1753209359.jpg" alt="Những kẻ điên cuồng ám ảnh với điều giả tạo (DROP)" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 12,612</span><span><i class="fa fa-bookmark-o"></i> 5</span>
+			</div>
+		</div>
+		<div class="name">Những kẻ điên cuồng ám ảnh với điều giả tạo (DROP)</div>
+	</a>
+	<a href="/truyen-tranh/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao-drop-/chap-12.html">
+		<div class="update">
+			<div class="chap_name">Chap 12</div>
+			<div class="time">29/10/2025</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/nhiem-vu-hongsil.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/nhiem-vu-hongsil-1760203225.jpg" alt="NHIỆM VỤ HONGSIL" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 12,819</span><span><i class="fa fa-bookmark-o"></i> 7</span>
+			</div>
+		</div>
+		<div class="name">NHIỆM VỤ HONGSIL</div>
+	</a>
+	<a href="/truyen-tranh/nhiem-vu-hongsil/54-3.html">
+		<div class="update">
+			<div class="chap_name">54.3</div>
+			<div class="time">15/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/nhat-ky-idol-cua-toi.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/nhat-ky-idol-cua-toi-1776184754.jpg" alt="Nhật Ký Idol Của Tôi" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 11,776</span><span><i class="fa fa-bookmark-o"></i> 4</span>
+			</div>
+		</div>
+		<div class="name">Nhật Ký Idol Của Tôi</div>
+	</a>
+	<a href="/truyen-tranh/nhat-ky-idol-cua-toi/30.html">
+		<div class="update">
+			<div class="chap_name">30</div>
+			<div class="time">17/05/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/thieu-nien-so-binh-minh-bung-chay.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/pearl-boy-hung-dong-ruc-lua-1747580449.jpeg" alt="THIẾU NIÊN SÒ: BÌNH MINH BÙNG CHÁY" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 11,129</span><span><i class="fa fa-bookmark-o"></i> 3</span>
+			</div>
+		</div>
+		<div class="name">THIẾU NIÊN SÒ: BÌNH MINH BÙNG CHÁY</div>
+	</a>
+	<a href="/truyen-tranh/thieu-nien-so-binh-minh-bung-chay/56.html">
+		<div class="update">
+			<div class="chap_name">56</div>
+			<div class="time">13/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/10-dieu-toi-muon-lam-truoc-tuoi-40.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/10-dieu-toi-muon-lam-truoc-tuoi-40-1747576966.jpg" alt="10 điều tôi muốn làm trước tuổi 40" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 10,158</span><span><i class="fa fa-bookmark-o"></i> 3</span>
+			</div>
+		</div>
+		<div class="name">10 điều tôi muốn làm trước tuổi 40</div>
+	</a>
+	<a href="/truyen-tranh/10-dieu-toi-muon-lam-truoc-tuoi-40/7-+-8.html">
+		<div class="update">
+			<div class="chap_name">7 + 8</div>
+			<div class="time">31/05/2025</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/moi-quan-he-ngoai-gio-hanh-chinh.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/moi-quan-he-ngoai-gio-hanh-chinh-1766197403.jpg" alt="Mối Quan Hệ Ngoài Giờ Hành Chính" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 10,029</span><span><i class="fa fa-bookmark-o"></i> 1</span>
+			</div>
+		</div>
+		<div class="name">Mối Quan Hệ Ngoài Giờ Hành Chính</div>
+	</a>
+	<a href="/truyen-tranh/moi-quan-he-ngoai-gio-hanh-chinh/chap-8--end.html">
+		<div class="update">
+			<div class="chap_name">Chap 8 - END</div>
+			<div class="time">20/12/2025</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/co-tieu-thu-va-khuc-tieu-thu-.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/co-tieu-thu-va-khuc-tieu-thu--1771006651.jpg" alt="Cố Tiểu Thư Và Khúc Tiểu Thư" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 9,405</span><span><i class="fa fa-bookmark-o"></i> 24</span>
+			</div>
+		</div>
+		<div class="name">Cố Tiểu Thư Và Khúc Tiểu Thư</div>
+	</a>
+	<a href="/truyen-tranh/co-tieu-thu-va-khuc-tieu-thu-/chuong-150--end.html">
+		<div class="update">
+			<div class="chap_name">Chương 150 - END</div>
+			<div class="time">30/06/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/nhung-ke-dang-chet.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/nhung-ke-dang-chet-1782661996.jpg" alt="Những Kẻ Đáng Chết" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 9,314</span><span><i class="fa fa-bookmark-o"></i> 12</span>
+			</div>
+		</div>
+		<div class="name">Những Kẻ Đáng Chết</div>
+	</a>
+	<a href="/truyen-tranh/nhung-ke-dang-chet/37.html">
+		<div class="update">
+			<div class="chap_name">37</div>
+			<div class="time">1 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/soi-chi-do-khong-tan.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/soi-chi-do-khong-tan-1770484869.jpg" alt="Sợi Chỉ Đỏ Không Tàn" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 9,291</span><span><i class="fa fa-bookmark-o"></i> 3</span>
+			</div>
+		</div>
+		<div class="name">Sợi Chỉ Đỏ Không Tàn</div>
+	</a>
+	<a href="/truyen-tranh/soi-chi-do-khong-tan/chap-39.html">
+		<div class="update">
+			<div class="chap_name">Chap 39</div>
+			<div class="time">01/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/hang-xom-cua-toi-cu-luon-nhin-cham-cham-vao-toi.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/hang-xom-cua-toi-cu-luon-nhin-cham-cham-vao-toi-1752077233.jpg" alt="Hàng Xóm Của Tôi Cứ Luôn Nhìn Chằm Chằm Vào Tôi" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 9,260</span><span><i class="fa fa-bookmark-o"></i> 11</span>
+			</div>
+		</div>
+		<div class="name">Hàng Xóm Của Tôi Cứ Luôn Nhìn Chằm Chằm Vào Tôi</div>
+	</a>
+	<a href="/truyen-tranh/hang-xom-cua-toi-cu-luon-nhin-cham-cham-vao-toi/86.html">
+		<div class="update">
+			<div class="chap_name">86</div>
+			<div class="time">15/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/bong-hinh-trong-trai-tim.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/bong-hinh-trong-trai-tim-1785383775.jpg" alt="Bóng Hình Trong Trái Tim" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 14,371</span><span><i class="fa fa-bookmark-o"></i> 45</span>
+			</div>
+		</div>
+		<div class="name">Bóng Hình Trong Trái Tim</div>
+	</a>
+	<a href="/truyen-tranh/bong-hinh-trong-trai-tim/chap-35--end.html">
+		<div class="update">
+			<div class="chap_name">Chap 35 - End</div>
+			<div class="time">31/07/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/tap-truyen-ngan-gl-18+.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/tap-truyen-ngan-gl-18+-1787398031.jpeg" alt="Tập Truyện Ngắn GL 18+" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 8,719</span><span><i class="fa fa-bookmark-o"></i> 42</span>
+			</div>
+		</div>
+		<div class="name">Tập Truyện Ngắn GL 18+</div>
+	</a>
+	<a href="/truyen-tranh/tap-truyen-ngan-gl-18+/chap-7--futa.html">
+		<div class="update">
+			<div class="chap_name">Chap 7 - Futa</div>
+			<div class="time">29/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/doa-hoa-la-moi-nhu.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/doa-hoa-la-moi-nhu-1749136215.jpeg" alt="Đóa Hoa Là Mồi Nhử" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 8,614</span><span><i class="fa fa-bookmark-o"></i> 13</span>
+			</div>
+		</div>
+		<div class="name">Đóa Hoa Là Mồi Nhử</div>
+	</a>
+	<a href="/truyen-tranh/doa-hoa-la-moi-nhu/56.html">
+		<div class="update">
+			<div class="chap_name">56</div>
+			<div class="time">15/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/bay-ho-diep.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/bay-ho-diep-1768483521.jpg" alt="Bẫy Hồ Điệp" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 8,353</span><span><i class="fa fa-bookmark-o"></i> 0</span>
+			</div>
+		</div>
+		<div class="name">Bẫy Hồ Điệp</div>
+	</a>
+	<a href="/truyen-tranh/bay-ho-diep/chap-45--ngoai-truyen-3.html">
+		<div class="update">
+			<div class="chap_name">Chap 45 - Ngoại Truyện 3</div>
+			<div class="time">16/01/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/bi-quyet-chinh-phuc-tinh-don-phuong.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/bi-quyet-chinh-phuc-tinh-don-phuong-1785412879.jpg" alt="BÍ QUYẾT CHINH PHỤC TÌNH ĐƠN PHƯƠNG" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 7,523</span><span><i class="fa fa-bookmark-o"></i> 4</span>
+			</div>
+		</div>
+		<div class="name">BÍ QUYẾT CHINH PHỤC TÌNH ĐƠN PHƯƠNG</div>
+	</a>
+	<a href="/truyen-tranh/bi-quyet-chinh-phuc-tinh-don-phuong/chap-40-end.html">
+		<div class="update">
+			<div class="chap_name">Chap 40 END</div>
+			<div class="time">11/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/manh-ho-jang-san.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/manh-ho-jang-san-1785413327.jpg" alt="Mãnh Hổ Jang San" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 7,377</span><span><i class="fa fa-bookmark-o"></i> 4</span>
+			</div>
+		</div>
+		<div class="name">Mãnh Hổ Jang San</div>
+	</a>
+	<a href="/truyen-tranh/manh-ho-jang-san/chap-18.html">
+		<div class="update">
+			<div class="chap_name">Chap 18</div>
+			<div class="time">19 giờ trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/21+-tinh-yeu-sau-dam-cua-canh-sat-khu-pho-nguoi-vo-bi-giam-cam-va-hiep-dam-.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/21+-tinh-yeu-sau-dam-cua-canh-sat-khu-pho-nguoi-vo-bi-giam-cam-va-hiep-dam--1747671934.jpg" alt="[21+] Tình yêu sâu đậm của cảnh sát khu phố, người vợ bị giam cầm và hiếp dâm." onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 7,261</span><span><i class="fa fa-bookmark-o"></i> 1</span>
+			</div>
+		</div>
+		<div class="name">[21+] Tình yêu sâu đậm của cảnh sát khu phố, người vợ bị giam cầm và hiếp dâm.</div>
+	</a>
+	<a href="/truyen-tranh/21+-tinh-yeu-sau-dam-cua-canh-sat-khu-pho-nguoi-vo-bi-giam-cam-va-hiep-dam-/chap-6.html">
+		<div class="update">
+			<div class="chap_name">Chap 6</div>
+			<div class="time">23/05/2025</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/tac-gia-xx.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/tac-gia-xx-1787398000.jpg" alt="Tác Giả XX" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 7,219</span><span><i class="fa fa-bookmark-o"></i> 48</span>
+			</div>
+		</div>
+		<div class="name">Tác Giả XX</div>
+	</a>
+	<a href="/truyen-tranh/tac-gia-xx/chap-36.html">
+		<div class="update">
+			<div class="chap_name">Chap 36</div>
+			<div class="time">1 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/con-mua-chua-tung-tanh.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/con-mua-chua-tung-tanh-1787398477.jpeg" alt="Cơn Mưa Chưa Từng Tạnh" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 7,108</span><span><i class="fa fa-bookmark-o"></i> 74</span>
+			</div>
+		</div>
+		<div class="name">Cơn Mưa Chưa Từng Tạnh</div>
+	</a>
+	<a href="/truyen-tranh/con-mua-chua-tung-tanh/chap-8--moi-nhat.html">
+		<div class="update">
+			<div class="chap_name">Chap 8 - Mới nhất</div>
+			<div class="time">29/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/thang-3.html">
+		<div class="img">
+			<img src="/uploads/minh_hoa/thang-3-1752076510.jpeg" alt="Tháng 3" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 6,396</span><span><i class="fa fa-bookmark-o"></i> 5</span>
+			</div>
+		</div>
+		<div class="name">Tháng 3</div>
+	</a>
+	<a href="/truyen-tranh/thang-3/36.html">
+		<div class="update">
+			<div class="chap_name">36</div>
+			<div class="time">14/04/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/trien-chi--pheromone.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/trien-chi--pheromone-1787144206.jpg" alt="Triền Chi - Pheromone" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 6,383</span><span><i class="fa fa-bookmark-o"></i> 214</span>
+			</div>
+		</div>
+		<div class="name">Triền Chi - Pheromone</div>
+	</a>
+	<a href="/truyen-tranh/trien-chi--pheromone/theo-duoi-nguoi-trong-long--81.html">
+		<div class="update">
+			<div class="chap_name">Theo đuổi người trong lòng - 81</div>
+			<div class="time">4 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/giua-khoang-trong-khong-nguoi.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/giua-khoang-trong-khong-nguoi-1785413378.jpg" alt="Giữa Khoảng Trống Không Người" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 6,232</span><span><i class="fa fa-bookmark-o"></i> 3</span>
+			</div>
+		</div>
+		<div class="name">Giữa Khoảng Trống Không Người</div>
+	</a>
+	<a href="/truyen-tranh/giua-khoang-trong-khong-nguoi/chapter-6.html">
+		<div class="update">
+			<div class="chap_name">Chapter 6</div>
+			<div class="time">21/02/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/in-my-bad.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/in-my-bad-1762793201.jpg" alt="In My Bad" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 5,944</span><span><i class="fa fa-bookmark-o"></i> 3</span>
+			</div>
+		</div>
+		<div class="name">In My Bad</div>
+	</a>
+	<a href="/truyen-tranh/in-my-bad/chap-32.html">
+		<div class="update">
+			<div class="chap_name">Chap 32</div>
+			<div class="time">02/05/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/giai-phong-ban-nga.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/giai-phong-ban-nga-1770051097.jpg" alt="Giải Phóng Bản Ngã" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 5,862</span><span><i class="fa fa-bookmark-o"></i> 2</span>
+			</div>
+		</div>
+		<div class="name">Giải Phóng Bản Ngã</div>
+	</a>
+	<a href="/truyen-tranh/giai-phong-ban-nga/nt9-end.html">
+		<div class="update">
+			<div class="chap_name">NT9 END</div>
+			<div class="time">16/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/19+-buong-tha.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/19+-buong-tha-1786696615.jpg" alt="[19+] Buông Thả" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 5,736</span><span><i class="fa fa-bookmark-o"></i> 38</span>
+			</div>
+		</div>
+		<div class="name">[19+] Buông Thả</div>
+	</a>
+	<a href="/truyen-tranh/19+-buong-tha/chap-20--moi-nhat.html">
+		<div class="update">
+			<div class="chap_name">Chap 20 - Mới nhất</div>
+			<div class="time">31/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/19+-huong-dan-su-dung-moi-quan-he.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/huong-dan-su-dung-moi-quan-he-1785471531.jpeg" alt="[19+] Hướng Dẫn Sử Dụng Mối Quan Hệ" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 5,677</span><span><i class="fa fa-bookmark-o"></i> 23</span>
+			</div>
+		</div>
+		<div class="name">[19+] Hướng Dẫn Sử Dụng Mối Quan Hệ</div>
+	</a>
+	<a href="/truyen-tranh/19+-huong-dan-su-dung-moi-quan-he/chap-7.html">
+		<div class="update">
+			<div class="chap_name">Chap 7</div>
+			<div class="time">24/07/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/thu-quang.html">
+		<div class="img">
+			<img src="https://tachserver.online/cdn3/uploads/minh_hoa/thu-quang-1779295649.jpg" alt="Thụ Quang" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 5,666</span><span><i class="fa fa-bookmark-o"></i> 2</span>
+			</div>
+		</div>
+		<div class="name">Thụ Quang</div>
+	</a>
+	<a href="/truyen-tranh/thu-quang/13.html">
+		<div class="update">
+			<div class="chap_name">13</div>
+			<div class="time">13/08/2026</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/thanh-ca-mua-ha.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/thanh-ca-mua-ha-1786279272.jpg" alt="THÁNH CA MÙA HẠ" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 5,632</span><span><i class="fa fa-bookmark-o"></i> 9</span>
+			</div>
+		</div>
+		<div class="name">THÁNH CA MÙA HẠ</div>
+	</a>
+	<a href="/truyen-tranh/thanh-ca-mua-ha/30.html">
+		<div class="update">
+			<div class="chap_name">30</div>
+			<div class="time">4 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/18+-ruthless-gl-pheromone.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/ruthless-gl-pheromone-1786604289.jpg" alt="[18+] Ruthless GL [Pheromone]" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 5,632</span><span><i class="fa fa-bookmark-o"></i> 46</span>
+			</div>
+		</div>
+		<div class="name">[18+] Ruthless GL [Pheromone]</div>
+	</a>
+	<a href="/truyen-tranh/18+-ruthless-gl-pheromone/77.html">
+		<div class="update">
+			<div class="chap_name">77</div>
+			<div class="time">4 ngày trước</div>
+		</div>
+	</a>
+</div><div class="li_truyen">
+	<a href="/truyen-tranh/19+-thien-than-nha-ben.html">
+		<div class="img">
+			<img src="https://tachserver.site/cdn3/uploads/minh_hoa/19+-thien-than-nha-ben-1787398356.jpeg" alt="[19+] Thiên Thần Nhà Bên" onerror="this.src='/images/no-images.jpg';">
+			<div class="info">
+				<span><i class="fa fa-eye"></i> 5,563</span><span><i class="fa fa-bookmark-o"></i> 18</span>
+			</div>
+		</div>
+		<div class="name">[19+] Thiên Thần Nhà Bên</div>
+	</a>
+	<a href="/truyen-tranh/19+-thien-than-nha-ben/chap-7--end.html">
+		<div class="update">
+			<div class="chap_name">Chap 7 - End</div>
+			<div class="time">21/05/2026</div>
+		</div>
+	</a>
+</div>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+			<div class="page_redirect">
+				<a href="/top-thang.html?page=1" class="active">1</a><a href="/top-thang.html?page=2">2</a><a href="/top-thang.html?page=3">3</a><a href="/top-thang.html?page=4">4</a><a href="/top-thang.html?page=5">5</a>
+			</div>			
+		</div>
+		<div class="container_right">
+			<div class="widget_right" id="box_fanpage">
+				<iframe src="//www.facebook.com/plugins/likebox.php?href=https://www.facebook.com/leesincomic&amp;colorscheme=light&amp;show_faces=true&amp;stream=false&amp;header=false&width=300" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100%; height:auto;" allowTransparency="false"></iframe>
+			</div>
+			<div class="widget_right">
+				<div class="list_tab">
+					<div class="tab active" id="top_day">Top ngày</div>
+					<div class="tab" id="top_week">Top tuần</div>
+					<div class="tab" id="top_month">Top tháng</div>
+				</div>
+				<div class="content_tab">
+					<ul class="top_truyen">
+						<li class="top_day" style="display: list-item;">
+    <div class="stt">1</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/hen-uoc-dau-ngon-tay-1785471582.jpg" alt="[19+] Hẹn Ước Đầu Ngón Tay"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/19+-hen-uoc-dau-ngon-tay.html">[19+] Hẹn Ước Đầu Ngón Tay</a></p>
+        <p class="chapter">Chap 35 - Mới nhất</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 14,706</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">2</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/chet-trong-vong-tay-em-1761242537.jpg" alt="Chết Trong Vòng Tay Em"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/chet-trong-vong-tay-em.html">Chết Trong Vòng Tay Em</a></p>
+        <p class="chapter">Chap 46</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 13,696</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">3</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao--1763393218.jpg" alt="Những kẻ điên cuồng ám ảnh với điều giả tạo"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao.html">Những kẻ điên cuồng ám ảnh với điều giả tạo</a></p>
+        <p class="chapter">55</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 10,577</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">4</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/moi-quan-he-ngoai-gio-hanh-chinh-1766197403.jpg" alt="Mối Quan Hệ Ngoài Giờ Hành Chính"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/moi-quan-he-ngoai-gio-hanh-chinh.html">Mối Quan Hệ Ngoài Giờ Hành Chính</a></p>
+        <p class="chapter">Chap 8 - END</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 10,029</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">5</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/tap-truyen-ngan-gl-18+-1787398031.jpeg" alt="Tập Truyện Ngắn GL 18+"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/tap-truyen-ngan-gl-18+.html">Tập Truyện Ngắn GL 18+</a></p>
+        <p class="chapter">Chap 7 - Futa</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 8,601</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">6</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/tuyen-tap-truyen-ngan-bl-manhwa-1764089559.jpg" alt="Tuyển Tập Truyện Ngắn BL Manhwa"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/tuyen-tap-truyen-ngan-bl-manhwa.html">Tuyển Tập Truyện Ngắn BL Manhwa</a></p>
+        <p class="chapter">Thuần hóa 3</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 7,809</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">7</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/nhung-ke-dang-chet-1782661996.jpg" alt="Những Kẻ Đáng Chết"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/nhung-ke-dang-chet.html">Những Kẻ Đáng Chết</a></p>
+        <p class="chapter">37</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 6,507</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">8</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/trien-chi--pheromone-1787144206.jpg" alt="Triền Chi - Pheromone"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/trien-chi--pheromone.html">Triền Chi - Pheromone</a></p>
+        <p class="chapter">Theo đuổi người trong lòng - 81</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 6,383</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">9</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/in-my-bad-1762793201.jpg" alt="In My Bad"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/in-my-bad.html">In My Bad</a></p>
+        <p class="chapter">Chap 32</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 5,944</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_day" style="display: list-item;">
+    <div class="stt">10</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/bong-hinh-trong-trai-tim-1785383775.jpg" alt="Bóng Hình Trong Trái Tim"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/bong-hinh-trong-trai-tim.html">Bóng Hình Trong Trái Tim</a></p>
+        <p class="chapter">Chap 35 - End</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 5,851</p>
+    </div>
+    <div class="clear"></div>
+</li>
+						<li class="top_week" style="display: none;">
+    <div class="stt">1</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/tuyen-tap-truyen-ngan-bl-manhwa-1764089559.jpg" alt="Tuyển Tập Truyện Ngắn BL Manhwa"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/tuyen-tap-truyen-ngan-bl-manhwa.html">Tuyển Tập Truyện Ngắn BL Manhwa</a></p>
+        <p class="chapter">Thuần hóa 3</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 80,106</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">2</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/hen-uoc-dau-ngon-tay-1785471582.jpg" alt="[19+] Hẹn Ước Đầu Ngón Tay"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/19+-hen-uoc-dau-ngon-tay.html">[19+] Hẹn Ước Đầu Ngón Tay</a></p>
+        <p class="chapter">Chap 35 - Mới nhất</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 40,047</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">3</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/giua-lung-chung-lua-1782839282.jpg" alt="Giữa Lưng Chừng Lửa"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/giua-lung-chung-lua.html">Giữa Lưng Chừng Lửa</a></p>
+        <p class="chapter">36</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 33,300</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">4</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao--1763393218.jpg" alt="Những kẻ điên cuồng ám ảnh với điều giả tạo"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao.html">Những kẻ điên cuồng ám ảnh với điều giả tạo</a></p>
+        <p class="chapter">55</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 30,772</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">5</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/19+-fucking-insane-crazy-1787398233.jpg" alt="[19+] Fucking, Insane, Crazy"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/19+-fucking-insane-crazy.html">[19+] Fucking, Insane, Crazy</a></p>
+        <p class="chapter">Chap 13 - Mới nhất</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 29,871</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">6</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/boredom-alert-1785412593.jpg" alt="BOREDOM ALERT"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/boredom-alert.html">BOREDOM ALERT</a></p>
+        <p class="chapter">Chap 39</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 27,575</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">7</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/19+-khoai-cam-toi-loi-1787398143.jpg" alt="[19+] Khoái Cảm Tội Lỗi"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/19+-khoai-cam-toi-loi.html">[19+] Khoái Cảm Tội Lỗi</a></p>
+        <p class="chapter">Chap 16 - Mới nhất</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 24,621</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">8</div>
+    <div class="book_avatar"><img src="/uploads/minh_hoa/bo-toi-tro-thanh-tai-san-cong-cong-1752076899.jpeg" alt="BỐ TÔI TRỞ THÀNH TÀI SẢN CÔNG CỘNG"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/bo-toi-tro-thanh-tai-san-cong-cong.html">BỐ TÔI TRỞ THÀNH TÀI SẢN CÔNG CỘNG</a></p>
+        <p class="chapter">37</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 21,344</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">9</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/yoksu-1779296466.jpg" alt="Yoksu"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/yoksu.html">Yoksu</a></p>
+        <p class="chapter">18</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 19,389</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_week" style="display: none;">
+    <div class="stt">10</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/tinh-den-vao-mot-dem-trang-sang-1777398510.jpg" alt="Tình Đến Vào Một Đêm Trăng Sáng"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/tinh-den-vao-mot-dem-trang-sang.html">Tình Đến Vào Một Đêm Trăng Sáng</a></p>
+        <p class="chapter">24</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 17,480</p>
+    </div>
+    <div class="clear"></div>
+</li>
+						<li class="top_month" style="display: none;">
+    <div class="stt">1</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/tu-duy-nguoc-bl-1757693208.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/tu-duy-nguoc-bl.html">Tư Duy Ngược BL</a></p>
+        <p class="chapter">Chap 48</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 77,484</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">2</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/giua-lung-chung-lua-1782839282.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/giua-lung-chung-lua.html">Giữa Lưng Chừng Lửa</a></p>
+        <p class="chapter">36</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 59,578</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">3</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/19+-khoai-cam-toi-loi-1787398143.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/19+-khoai-cam-toi-loi.html">[19+] Khoái Cảm Tội Lỗi</a></p>
+        <p class="chapter">Chap 16 - Mới nhất</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 58,898</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">4</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/tuyen-tap-truyen-ngan-bl-manhwa-1764089559.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/tuyen-tap-truyen-ngan-bl-manhwa.html">Tuyển Tập Truyện Ngắn BL Manhwa</a></p>
+        <p class="chapter">Thuần hóa 3</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 55,563</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">5</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/hen-uoc-dau-ngon-tay-1785471582.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/19+-hen-uoc-dau-ngon-tay.html">[19+] Hẹn Ước Đầu Ngón Tay</a></p>
+        <p class="chapter">Chap 35 - Mới nhất</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 40,047</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">6</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao--1763393218.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/nhung-ke-dien-cuong-am-anh-voi-dieu-gia-tao.html">Những kẻ điên cuồng ám ảnh với điều giả tạo</a></p>
+        <p class="chapter">55</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 30,772</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">7</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/19+-fucking-insane-crazy-1787398233.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/19+-fucking-insane-crazy.html">[19+] Fucking, Insane, Crazy</a></p>
+        <p class="chapter">Chap 13 - Mới nhất</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 29,871</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">8</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/chet-trong-vong-tay-em-1761242537.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/chet-trong-vong-tay-em.html">Chết Trong Vòng Tay Em</a></p>
+        <p class="chapter">Chap 46</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 29,285</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">9</div>
+    <div class="book_avatar"><img src="https://tachserver.site/cdn3/uploads/minh_hoa/boredom-alert-1785412593.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/boredom-alert.html">BOREDOM ALERT</a></p>
+        <p class="chapter">Chap 39</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 27,575</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="top_month" style="display: none;">
+    <div class="stt">10</div>
+    <div class="book_avatar"><img src="https://tachserver.online/cdn3/uploads/minh_hoa/anh-nhin-lech-lac-1767201042.jpg"></div>
+    <div class="detail">
+        <p class="name"><a href="/truyen-tranh/anh-nhin-lech-lac.html">Ánh Nhìn Lệch Lạc</a></p>
+        <p class="chapter">Chap 25</p>
+        <p class="total_view"><i class="fa fa-eye"></i> 25,919</p>
+    </div>
+    <div class="clear"></div>
+</li>
+					</ul>
+				</div>
+				<div class="load_more"><a>Xem thêm</a></div>
+			</div>
+			<div class="widget_right">
+				<div class="list_tab">
+					<div class="tab active" id="level">Top Donate</div>
+					<div class="tab" id="point">Tài phú</div>
+					<div class="tab" id="guild" style="display: none;">Bang hội</div>
+				</div>
+				<div class="content_tab">
+					<ul class="top_level">
+						<li class="level" style="display: list-item;">
+    <div class="stt">1</div>
+    <div class="book_avatar"><img src="/uploads/avatar/leesin1999-1748263094.jpg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',23540)">JACK Bỏ Con</a></p>
+        <p class="chapter level_9">Sử thi</p>
+        <p class="total_view">TOP 1</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">2</div>
+    <div class="book_avatar"><img src="/uploads/avatar/admin-1694599759.jpg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21117)">Dualeotruyen</a></p>
+        <p class="chapter level_9">Sử thi</p>
+        <p class="total_view">TOP 2</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">3</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21030)">jl0994</a></p>
+        <p class="chapter level_1">Hiếm</p>
+        <p class="total_view">TOP 3</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">4</div>
+    <div class="book_avatar"><img src="/uploads/avatar/duieenly-1694321422.jpeg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21098)">duieenly</a></p>
+        <p class="chapter level_1">Hiếm</p>
+        <p class="total_view">TOP 4</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">5</div>
+    <div class="book_avatar"><img src="/uploads/avatar/cookie-1722064932.png" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21513)">Cookie</a></p>
+        <p class="chapter level_1">Hiếm</p>
+        <p class="total_view">TOP 5</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">6</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21573)">kakakakakakakakakak</a></p>
+        <p class="chapter level_1">Hiếm</p>
+        <p class="total_view">TOP 6</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">7</div>
+    <div class="book_avatar"><img src="/uploads/avatar/serenity-1698040483.jpg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21316)">serenity</a></p>
+        <p class="chapter level_1">Hiếm</p>
+        <p class="total_view">TOP 7</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">8</div>
+    <div class="book_avatar"><img src="/uploads/avatar/lamm-1694852328.png" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21088)">lamm</a></p>
+        <p class="chapter level_1">Hiếm</p>
+        <p class="total_view">TOP 8</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">9</div>
+    <div class="book_avatar"><img src="/uploads/avatar/nguyenvan-1705068245.jpg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',22139)">nguyenvan</a></p>
+        <p class="chapter level_1">Hiếm</p>
+        <p class="total_view">TOP 9</p>
+    </div>
+    <div class="clear"></div>
+</li><li class="level" style="display: list-item;">
+    <div class="stt">10</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21192)">crocodile</a></p>
+        <p class="chapter level_1">Hiếm</p>
+        <p class="total_view">TOP 10</p>
+    </div>
+    <div class="clear"></div>
+</li>
+						<li class="point" style="display: none;">
+    <div class="stt">1</div>
+    <div class="book_avatar"><img src="/uploads/avatar/lessin-comic-1763349912.jpeg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',23532)">Lessin Comic</a></p>
+        <p class="chapter level_top">SIÊU VIP</p>
+        <p class="total_view">1,000,000,030 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">2</div>
+    <div class="book_avatar"><img src="/uploads/avatar/admin-1694599759.jpg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21117)">Dualeotruyen</a></p>
+        <p class="chapter level_top">SIÊU VIP</p>
+        <p class="total_view">99,385,279 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">3</div>
+    <div class="book_avatar"><img src="/uploads/avatar/leesin1999-1748263094.jpg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',23540)">JACK Bỏ Con</a></p>
+        <p class="chapter level_11">VIP 11</p>
+        <p class="total_view">1,000,000 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">4</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',23006)">hoanganh0904</a></p>
+        <p class="chapter level_0">Thành viên mới</p>
+        <p class="total_view">40,060 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">5</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',22472)">nhien1987</a></p>
+        <p class="chapter level_0">Thành viên mới</p>
+        <p class="total_view">20,250 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">6</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21720)">linh00234</a></p>
+        <p class="chapter level_0">Thành viên mới</p>
+        <p class="total_view">16,100 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">7</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',22054)">ngan2810</a></p>
+        <p class="chapter level_0">Thành viên mới</p>
+        <p class="total_view">16,000 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">8</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21276)">thanthanh</a></p>
+        <p class="chapter level_0">Thành viên mới</p>
+        <p class="total_view">11,490 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">9</div>
+    <div class="book_avatar"><img src="" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21694)">daohuyen</a></p>
+        <p class="chapter level_0">Thành viên mới</p>
+        <p class="total_view">11,090 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li><li class="point" style="display: none;">
+    <div class="stt">10</div>
+    <div class="book_avatar"><img src="/uploads/avatar/yesimou416-1692415027.jpg" onerror="this.src='/images/user.png';"></div>
+    <div class="detail">
+        <p class="name"><a onclick="show_popup('member_profile',21003)">Diệp Tư Mục - 叶思缪</a></p>
+        <p class="chapter level_0">Thành viên mới</p>
+        <p class="total_view">10,822 <svg class="svg-inline--fa fa-diamond fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="diamond" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                <path fill="currentColor" d="M242.2 8.3c-9.6-11.1-26.8-11.1-36.4 0l-200 232c-7.8 9-7.8 22.3 0 31.3l200 232c9.6 11.1 26.8 11.1 36.4 0l200-232c7.8-9 7.8-22.3 0-31.3l-200-232z"></path>
+            </svg><!-- <i class="fas fa-diamond"></i> -->
+        </p>
+    </div>
+    <div class="clear"></div>
+</li>
+						
+					</ul>
+				</div>
+				<div class="load_more"><a>Xem thêm</a></div>
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	<footer class="light">
+    <div class="div_middle">
+        <div class="left">
+            <p class="logo"><a class="no_hover" href="https://leesincomic.com/">Leesin<span>Comic</span>.com</a></p>
+          
+        </div>
+        <div class="right">
+            <ul>
+                <li><a href="/the-loai/boy-love.html" target="">Boy Love</a></li><li><a href="/the-loai/tinh-yeu.html" target="">Tình Yêu</a></li><li><a href="/the-loai/manga.html" target="">Manga</a></li><li><a href="/the-loai/manhua.html" target="">Manhua</a></li><li><a href="/the-loai/manhwa.html" target="">Manhwa</a></li><li><a href="/the-loai/chuyen-sinh.html" target="">Chuyển Sinh</a></li><li><a href="/the-loai/co-dai.html" target="">Cổ Đại</a></li><li><a href="/the-loai/dam-my.html" target="">Đam Mỹ</a></li><li><a href="/the-loai/trinh-tham.html" target="">Trinh Thám</a></li><li><a href="/the-loai/xuyen-khong.html" target="">Xuyên Không</a></li><li><a href="/the-loai/hoc-duong.html" target="">Học Đường</a></li><li><a href="/the-loai/hanh-dong.html" target="">Hành Động</a></li><li><a href="/the-loai/phieu-luu.html" target="">Phiêu Lưu</a></li><li><a href="/the-loai/hai-huoc.html" target="">Hài Hước</a></li><li><a href="/the-loai/18+.html" target="">18+</a></li><li><a href="/the-loai/tong-tai.html" target="">Tổng Tài</a></li><li><a href="/the-loai/oneshot.html" target="">Oneshot</a></li><li><a href="/the-loai/da-full.html" target="">Đã Full</a></li><li><a href="/the-loai/drama.html" target="">Drama</a></li><li><a href="/the-loai/vien-tuong.html" target="">Viễn Tưởng</a></li><li><a href="/the-loai/girl-love.html" target="">Girl Love</a></li>
+                <div class="clear"></div>
+            </ul>
+         
+
+        <div class="clear"></div>
+       
+    </div>
+</footer>
+	<audio id="sound_chat">
+    <source src="/uploads/chat.mp3" type="audio/mpeg">
+    Không hỗ trợ trình duyệt HTML 5
+</audio>
+<audio id="sound_global_message">
+    <source src="/uploads/global_message.mp3" type="audio/mpeg">
+    Không hỗ trợ trình duyệt HTML 5
+</audio>
+<button id="play_chat" onclick="play_chat()" style="display: none;">Play sound</button>
+<button id="play_chat" onclick="play_global()" style="display: none;">Play sound</button>
+<script>
+    var x = document.getElementById("sound_chat"); 
+    var y = document.getElementById("sound_global_message"); 
+    function play_chat() { 
+      x.play(); 
+    } 
+    function play_global() { 
+      y.play(); 
+    } 
+</script>
+<button class="button_top" id="go_button">TOP</button>
+<script type="text/javascript" src="/js/jquery.countdown.js"></script>
+<script src="/swiper/swiper.min.js"></script>
+<script type="text/javascript" src="/js/jquery.priceformat.min.js"></script>
+<script type="text/javascript" src="/js/demo_price.js"></script>
+<script type="text/javascript" src="/js/lazyload.min.js"></script>
+<script src="/js/process.js?t=1788856411"></script>
+<script src="/js/chat.js?t=1788856411"></script>
+<div class="load_overlay" style="display: none;"></div>
+<div class="load_process" style="display: none;">
+	<div class="load_content">
+		<img src="/images/load.gif" alt="loading" width="70">
+		<div class="load_note">Hệ thống đang xử lý</div>
+	</div>
+</div>
+<div class="box_pop" id="box_pop_register">
+    <div class="box_pop_content">
+        <div class="pop_title">Đăng ký mới</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <label for="">Tên đăng nhập( Viết Thường không dấu)</label>
+                <input type="text" name="username" placeholder="Nhập tên đăng nhập">
+            </div>
+            <div class="li_input">
+                <label for="">Mật khẩu</label>
+                <input type="password" name="password" placeholder="Mật khẩu">
+            </div>
+            <div class="li_input">
+                <label for="">Nhập lại mật khẩu</label>
+                <input type="password" name="re_password" placeholder="Nhập lại mật khẩu">
+            </div>
+        </div>
+        <div class="pop_button">
+            <div class="text_left">
+                <a href="javascript:;" class="button_show_login">Đăng nhập</a>
+            </div>
+            <div class="text_right">
+                <button id="button_register">Đăng ký</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_report">
+    <div class="box_pop_content">
+        <div class="pop_title">Báo Lỗi Truyện!</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <select name="loi">
+                    <option value="">-- Chọn loại lỗi --</option>
+                    <option value="Ảnh lỗi! Không thấy ảnh">Ảnh lỗi! Không thấy ảnh</option>
+                    <option value="Chap bị trùng">Chap bị trùng</option>
+                    <option value="Chap chưa dịch">Chap chưa dịch</option>
+                    <option value="Up sai truyện">Up sai truyện</option>
+                    <option value="Lỗi khác">Lỗi khác</option>
+                </select>
+            </div>
+            <div class="li_input">
+                <select name="chap"></select>
+            </div>
+            <div class="li_input" id="text_note">
+                <span style="font-style: italic;color: red">Mô tả chi tiết lỗi. Nếu báo đúng sẽ được thưởng 50 coin. Báo sai sẽ bị trừ 50 coin.</span>
+            </div>
+        </div>
+        <div class="pop_button">
+            <div class="text_right">
+                <button id="button_report" truyen="{truyen}">Gửi</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_donate">
+    <div class="box_pop_content">
+        <div class="pop_title">Donate Ủng hộ Team</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <label for="">Số coin</label>
+                <input type="text" name="coin" class="price_format" placeholder="Nhập số coin donate">
+            </div>
+        </div>
+        <div class="li_input" id="text_note" style="display: none;">
+            <span style="font-style: italic;color: red"></span>
+        </div>
+        <div class="pop_button">
+            <div class="text_center">
+                <button id="button_donate">Thực hiện</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_muachap">
+    <div class="box_pop_content">
+        <div class="pop_title">Premium Chapter</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <label for="">Mật khẩu mở chap</label>
+                <input type="text" name="pass_chap" placeholder="Nhập mật khẩu để mở chap">
+            </div>
+            <div class="li_input" style="font-style: italic;text-align: center;">
+                <span style="font-style: italic;text-align: center;font-size: 20px;color: red;font-weight: 700;"> hoặc {coin} coin</span>
+            </div>
+        </div>
+        <div class="li_input" style="font-style: italic;text-align: center;">
+            <span style="font-style: italic;font-family: Arial">Nếu không có mật khẩu mở chap bạn sẽ bị trừ coin!</span>
+        </div>
+        <div class="pop_button">
+            <div class="text_center">
+                <button id="button_muachap">Thực hiện</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_confirm">
+    <div class="box_pop_content">
+        <div class="pop_content">
+            <div class="li_input" style="font-style: italic;text-align: center;">
+                <span style="font-style: italic;text-align: center;font-size: 20px;color: red;font-weight: 700;" id="title_confirm"></span>
+            </div>
+        </div>
+        <div class="li_input" style="font-style: italic;text-align: center;">
+            <span style="font-style: italic;font-family: Arial">Bạn có chắc chắn thực hiện hàng động này!</span>
+        </div>
+        <div class="pop_button">
+            <div class="text_center">
+                <button id="button_thuchien" action="" post_id="">Thực hiện</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_login">
+    <div class="box_pop_content">
+        <div class="pop_title">Đăng nhập</div>
+        <div class="pop_content">
+            <i class="color_red">Nếu không đăng nhập được hãy dùng chức năng quên mật khẩu để lấy mật khẩu mới!</i>
+            <div class="li_input">
+                <label for="">Tên đăng nhập hoặc email</label>
+                <input type="text" name="username" placeholder="Nhập tên đăng nhập">
+            </div>
+            <div class="li_input">
+                <label for="">Mật khẩu</label>
+                <input type="password" name="password" placeholder="Mật khẩu đăng nhập">
+            </div>
+        </div>
+        <div class="pop_button">
+            <div class="text_left">
+                <a href="javascript:;" class="button_show_register">Đăng ký</a> | <a href="javascript:;" class="button_show_password">Quên mật khẩu</a>
+            </div>
+            <div class="text_right">
+                <button id="button_login">Đăng nhập</button>
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_pop" id="box_pop_password">
+    <div class="box_pop_content">
+        <div class="pop_title">Quên mật khẩu</div>
+        <div class="pop_content">
+            <div class="li_input">
+                <label for="">Email</label>
+                <input type="text" name="email" placeholder="Nhập địa chỉ email">
+            </div>
+            <div class="li_input">
+                <span style="font-style: italic;">Mật khẩu mới và link xác nhận sẽ được gửi tới địa chỉ email! Mật khẩu mới chỉ có hiệu lực sau khi bạn xác nhận!</span>
+            </div>
+            <div class="li_input">
+                <button id="forgot_password">Lấy mật khẩu mới</button>
+            </div>
+        </div>
+        <div class="pop_button">
+            <div class="text_left">
+                <a href="javascript:;" class="button_show_login">Đăng nhập</a>
+            </div>
+            <div class="text_right">
+                <button class="button_cancel bg_blue">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box_note">
+    <div class="note_title">Thông báo <i class="fa fa-close"></i></div>
+    <div class="note_content"></div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+	    $(window).scroll(function(){
+	        if ($(this).scrollTop() > 100) {
+	            $('#go_button').fadeIn();
+	        } else {
+	            $('#go_button').fadeOut();
+	        }
+	    });
+        $('#go_button').on('click',function(){
+            var top_download = $('body').offset().top;
+            $('html,body').stop().animate({scrollTop:top_download - 150}, 500, 'swing', function() { 
+            });
+        });
+        if($('.note_top').length>0){
+            setTimeout(function(){
+                $.ajax({
+                    url:'/process.php',
+                    type:'post',
+                    data:{
+                        action:'load_note',
+                    },
+                    success:function(kq){
+                        var info = JSON.parse(kq);
+                        $('.note_top .num').show();
+                        $('.note_top .num').html(info.total);
+                    }
+                });
+            },1200);
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $("img.lazyload").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.2&appId=641938006744130&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"f31ff21061114365acdf0dc8d389552b","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
