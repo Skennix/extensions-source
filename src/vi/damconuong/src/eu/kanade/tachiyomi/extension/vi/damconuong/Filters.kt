@@ -2,65 +2,34 @@ package eu.kanade.tachiyomi.extension.vi.damconuong
 
 import eu.kanade.tachiyomi.source.model.Filter
 import eu.kanade.tachiyomi.source.model.FilterList
-import kotlinx.serialization.Serializable
 
-fun getFilters(genres: List<GenreOption>?): FilterList = FilterList(
-    buildList {
-        add(SortFilter())
-        add(StatusFilter())
-        add(SearchTypeFilter())
-        genres?.let { add(GenreFilter(it.map { genre -> Genre(genre.name, genre.id) })) }
-    },
+// BACKLOG (153) — site viết lại hoàn toàn trên nền tảng mới (2026-09-28). Genre-picker cũ
+// (fetchFilterData qua nút Alpine.js @click="toggleGenre(...)") không còn tồn tại, và lọc theo
+// thể loại qua query (`genre=`/`filter[genre]=`/`filter[genres]=`) đều trả 400 ở API mới — CHƯA
+// tìm ra cú pháp đúng. Bỏ genre-filter, chỉ giữ Trạng thái (đã đo trực tiếp: filter[status]=2 lọc
+// đúng, khớp badge "Hoàn thành" trên trang chi tiết) và Sắp xếp (mangas/hot = phổ biến,
+// mangas/recent = mới cập nhật, đã có sẵn hai lối vào riêng nên không cần Sort filter nữa).
+fun getFilters(): FilterList = FilterList(
+    Filter.Header("Bộ lọc bị bỏ qua khi tìm theo tên"),
+    StatusFilter(),
 )
-
-@Serializable
-class GenreOption(
-    val name: String,
-    val id: String,
-)
-
-class SortFilter :
-    UriPartFilter(
-        "Sắp xếp",
-        arrayOf(
-            Pair("Mới cập nhật", "-updated_at"),
-            Pair("Mới nhất", "-created_at"),
-            Pair("Cũ nhất", "created_at"),
-            Pair("Xem nhiều", "-views"),
-            Pair("Top ngày", "-views_day"),
-            Pair("Top tuần", "-views_week"),
-            Pair("A-Z", "name"),
-            Pair("Z-A", "-name"),
-        ),
-    )
 
 class StatusFilter :
     UriPartFilter(
-        "Trạng thái",
-        arrayOf(
-            Pair("Đang tiến hành + Hoàn thành", "2,1"),
-            Pair("Đang tiến hành", "2"),
-            Pair("Hoàn thành", "1"),
+        "Tình trạng",
+        listOf(
+            Option("Đang tiến hành", "1"),
+            Option("Hoàn thành", "2"),
         ),
     )
 
-class SearchTypeFilter :
-    UriPartFilter(
-        "Tìm theo",
-        arrayOf(
-            Pair("Tên truyện", "name"),
-            Pair("Tác giả", "artist"),
-            Pair("Doujinshi", "doujinshi"),
-        ),
-    )
-
-class Genre(name: String, val id: String) : Filter.CheckBox(name)
-
-class GenreFilter(genres: List<Genre>) : Filter.Group<Genre>("Thể loại", genres)
+class Option(val name: String, val value: String)
 
 open class UriPartFilter(
     displayName: String,
-    private val vals: Array<Pair<String, String>>,
-) : Filter.Select<String>(displayName, vals.map { it.first }.toTypedArray()) {
-    fun toUriPart() = vals[state].second
+    options: List<Option>,
+) : Filter.Select<String>(displayName, (listOf("Tất cả") + options.map { it.name }).toTypedArray()) {
+    private val uriParts = listOf<String?>(null) + options.map { it.value }
+
+    fun toUriPart(): String? = uriParts[state]
 }

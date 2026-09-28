@@ -6,14 +6,21 @@ plugins {
 
 keiyoushi {
     name = "DamCoNuong"
-    versionCode = 9
+    versionCode = 10
     contentWarning = ContentWarning.NSFW
     libVersion = "1.6"
 
     source {
         lang = "vi"
+        // Do 2026-09-28: damconuong.sbs 301 sang damconuong.name (site viet lai hoan toan tren mot
+        // nen tang doc truyen moi - HTML/CSS/JS deu khac, con API rieng o api.damconuong.pw). Domain
+        // cu khong con noi dung rieng, chi song nho redirect - giu lam mirror de nguoi dung tu xoay
+        // khi domain moi chet, khong hang mot chuoi.
         baseUrl {
-            custom("https://damconuong.sbs")
+            mirrors(
+                "https://damconuong.name",
+                "https://damconuong.sbs",
+            )
         }
     }
 
