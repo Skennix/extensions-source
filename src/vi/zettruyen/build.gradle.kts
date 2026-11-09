@@ -6,7 +6,7 @@ plugins {
 
 keiyoushi {
     name = "ZetTruyen"
-    versionCode = 13
+    versionCode = 14
     contentWarning = ContentWarning.MIXED
     libVersion = "1.6"
 
@@ -18,6 +18,7 @@ keiyoushi {
         // xoay khi ten mien dau chet, thay vi hang mot chuoi.
         baseUrl {
             mirrors(
+                "https://www.zettruyen4.com",
                 "https://www.zettruyen1.com",
                 "https://www.zettruyen.work",
             )

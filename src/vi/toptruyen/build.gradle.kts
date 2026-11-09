@@ -6,7 +6,7 @@ plugins {
 
 keiyoushi {
     name = "Top Truyen"
-    versionCode = 36
+    versionCode = 37
     contentWarning = ContentWarning.MIXED
     libVersion = "1.6"
     theme = "wpcomics"
@@ -18,6 +18,7 @@ keiyoushi {
         // hang mot chuoi - lan sau chi them mot dong, khong phai di tim lai tu dau.
         baseUrl {
             mirrors(
+                "https://www.toptruyenzone12.com",
                 "https://www.toptruyenzone11.com",
                 "https://www.toptruyenzone10.com",
             )

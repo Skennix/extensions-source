@@ -267,7 +267,7 @@ abstract class MinoTruyen : KeiSource() {
 
     private val categories = setOf("manga", "comics", "hentai")
     private val apiUrlRegex = Regex("""NEXT_PUBLIC_API_URL\W+"(https?://[^"]+)"""")
-    private val apiUrlDefault = "https://api.cloudkk-v1.xyz/api"
+    private val apiUrlDefault = "https://api.cloudkk-v2.xyz/api"
     private val aesKey = "GCERKSmf28E6nWwrnR8Lz4f7TacKpzMy7aK0rxSB"
     private val encryptedDataRegex = Regex("""([a-f0-9]{32}:U2FsdGVk[A-Za-z0-9+/=]+)""")
     private val drmXorKey = "3141592653589793"

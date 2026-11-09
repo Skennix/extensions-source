@@ -6,7 +6,7 @@ plugins {
 
 keiyoushi {
     name = "DamCoNuong"
-    versionCode = 10
+    versionCode = 17
     contentWarning = ContentWarning.NSFW
     libVersion = "1.6"
 
@@ -18,6 +18,7 @@ keiyoushi {
         // khi domain moi chet, khong hang mot chuoi.
         baseUrl {
             mirrors(
+                "https://damconuong.win",
                 "https://damconuong.name",
                 "https://damconuong.sbs",
             )

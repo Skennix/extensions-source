@@ -6,13 +6,13 @@ plugins {
 
 keiyoushi {
     name = "NetTruyenTV (unoriginal)"
-    versionCode = 1
+    versionCode = 2
     contentWarning = ContentWarning.SAFE
     libVersion = "1.6"
     theme = "wpcomics"
 
     source {
         lang = "vi"
-        baseUrl = "https://nettruyentv.net"
+        baseUrl = "https://nettruyentop.com"
     }
 }
